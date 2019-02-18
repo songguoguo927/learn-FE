@@ -66,6 +66,8 @@ ps.JS中有+0，-0，在加法类运算中没有区别，在除法中，注意�
 
 `  console.log( 0.1 + 0.2 == 0.3);`//false
 
+*ans:*
+
 根据双精度浮点数的定义，Number 类型中有效的整数范围是-0x1fffffffffffff 至0x1fffffffffffff，所以 Number 无法精精确表示此范围外的整数。
 同样根据浮点数的定义，非整数的 Number 类型无法用 ==(=== 也不行) 来比较。这里错误的不是结论，而是比较的方法，正确的比较方法是使用JS提供的最小精度值。
 
@@ -113,14 +115,15 @@ JavaScript 语言设计上试图模糊对象和基本类型之间的关系，举
     console.log(typeof a); //symbol，a 并非对象
     a.hello(); //hello，有效
 ```
-**ans**. 运算符提供了装箱操作，它会根据基础类型构造一个临时对象，使得我们能在基础类型上调用对应对象的方法。
+*ans:*
+运算符提供了装箱操作，它会根据基础类型构造一个临时对象，使得我们能在基础类型上调用对应对象的方法。
 
 ### 类型转换
 
 大部分类型转换规则是非常简单的，如下表所示：
 
-|          | Null | Undefined | Boolean(true) | Boolean(false) | Number | String | Symbol | Object |
-| :------: | :------: | :------: |:------: |:------: |:------: |:------: |:------: |:------: |
+|      </ | Null | Undefined | Boolean(true) | Boolean(false) | Number | String | Symbol | Object |
+| :-----: | :-----: | :-----: |:-----: |:-----: |:-----: |:-----: |:-----: |:-----: |
 | Boolean | FALSE | FALSE | -| - | 0/NaN->false | ""->false |TRUE | TRUE |
 | Number | 0 | NaN |1| 0 | - | #StringToNumber  | TypeError | #拆箱转换  |
 | String | "null" | "undefined" |TRUE | FALSE |#NumberToString | - | TypeError | #拆箱转换 |
@@ -128,23 +131,21 @@ JavaScript 语言设计上试图模糊对象和基本类型之间的关系，举
 
 较为复杂的部分是 Number 和 String 之间的转换，以及对象跟基本类型之间的转换。
 
+**StringToNumber**
 
+>感觉讲的不怎么详尽，后续看《你不知道的JS》进行补充
+**NumberToString**
 
+**装箱转换**
 
+每一种基本类型 Number、String、Boolean、Symbol 在对象中都有对应的类，所谓装箱转换，正是把基本类型转换为对应的对象.
 
+但装箱机制会频繁产生临时对象，在一些对性能要求较高的场景下，我们应该尽量避免对基本类型做装箱转换。
 
+**拆箱转换**
 
-
-
-
-
-
-
-
-
-
-
-
+对象到 String 和 Number 的转换都遵循“先拆箱再转换”的规则。通过拆箱转换，把对象变成基本类型，再从基本类型转换为对应的
+String 或者 Number。
 
 
 
