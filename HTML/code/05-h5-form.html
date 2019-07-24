@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>H5新增form</title>
+    <script>
+      window.onload = function() {
+        //若要在一开始获取文档节点，需要将代码放在这里，不然会报错，因为代码的执行顺序
+        //更改进度条的值，产生动态效果
+        var ele = document.getElementById("progress");
+        var show = document.getElementById("show-num");
+        setInterval(() => {
+          if (ele.value >= 100) return;
+          ele.value += 10;
+          show.innerHTML = ele.value + "%";
+        }, 1000);
+      };
+    </script>
+  </head>
+  <body>
+    <h1>H5新增form</h1>
+    <!-- novalidate form表单不进行验证 -->
+    <form action="#" id="form">
+      <!-- <progress value="0.75" max="1">75%</progress>75%不显示 output span都可以-->
+      <progress id="progress" value="0" max="100"></progress
+      ><output id="show-num"></output><br />
+
+      <!-- optimum数值处于low 和high的3个区间中的哪一个，代表那一个为基准，小于low，越小越好，大于high，越大越好，中间值，越中间越好 -->
+      <!-- 记住一个原则：颜色含义不变，绿色安全，黄色警告，红色危险 -->
+      <meter
+        low="60"
+        high="80"
+        max="100"
+        min="0"
+        value="72"
+        optimum="72"
+      ></meter>
+      <meter low="60" high="80" max="100" min="0" value="20">green</meter>
+      <meter low="60" high="80" max="100" min="0" value="90">red</meter>
+      <br />
+      <input type="text" list="datasource" /><br />
+      <datalist id="datasource">
+        <option value="hello girl">备选1</option>
+        <option value="hey boy"></option>
+      </datalist>
+      <input type="text" autocomplete="off" name="test" />
+      <hr />
+      <h6>firefox目前只支持年月日/时间控件--兼容性问题</h6>
+      年月日：<input type="date" /> 年月<input type="month" /> 时间<input
+        type="time"
+      />
+      年周<input type="week" /> 日期时间<input type="datetime-local" />
+      <hr />
+      age：<input type="number" /> slider:<input
+        type="range"
+        min="0"
+        max="100"
+        step="10"
+        value="20"
+      />
+      搜索控件：<input type="search" />
+      <!--pattern写正则,自己写验证；required 必填项-->
+      电话：<input type="tel" pattern="[0-9]{11}" /> url带协议:<input
+        type="url"
+      />
+      color:<input type="color" /> email:<input type="email" required />
+      <input type="submit" />
+      <!-- formnovalidate表单不进行验证直接提交  -->
+      <button formtarget="_blank" formaction="./form.html" formnovalidate>
+        提交到其他地方
+      </button>
+    </form>
+    外部的input：<input type="text" name="outinput" form="form" />
+  </body>
+</html>

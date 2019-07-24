@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>☺️注册页</title>
+  </head>
+  <style>
+    form {
+      display: block;
+      margin: 100px auto;
+      text-align: center;
+    }
+  </style>
+  <body>
+    <form action="#" method="GET" enctype="application/x-www-form-urlencoded">
+      <!-- autofocus 自动聚焦 checked默认选中 -->
+      用户名: <input autofocus type="text" name="username" /><br />
+      密码: <input type="password" name="password" /><br />
+      <!-- 同一组单选按钮，name值保持一致，确保互斥 -->
+      性别:
+      <!-- 增加用户体验 -->
+      <!-- 想让文字男和input控件绑定（关联），即点击字相当于选中radio ，使用label，两种用法-->
+      <label><input type="radio" value="1" name="gender" /> 男</label>
+      <input type="radio" value="0" name="gender" id="female" /><label
+        for="female"
+      >
+        女</label
+      ><br />
+      爱好:
+      <label
+        ><input type="checkbox" name="hobby" value="sing" checked />唱</label
+      >
+      <label><input type="checkbox" name="hobby" value="dance" />跳</label>
+      <label><input type="checkbox" name="hobby" value="rap" />rap</label><br />
+      籍贯:
+      <select name="address" id="" multiple size="2">
+        <option value="">请选择</option>
+        <option value="shanghai">上海</option>
+        <option value="beijing">北京</option>
+        <option value="jiangxi" selected>江西</option>
+      </select>
+     <!-- multiple 配合ctrl键使用进行多选 ;size 默认展示的选项数 -->
+      <br />
+      个人简介：<br />
+      <textarea name="info" id="" cols="30" rows="10"></textarea><br />
+      <!-- <input type="submit" value="提交"> 下面一样在form表单里的button同样具有提交效果-->
+      <!-- 表单提交数据，实际上提交的是表单控件的value值 -->
+      <!-- 四种提交方式 -->
+      <button>提交</button>
+      <button type="submit">提交</button>
+      <input type="submit"/>  <!-- 不加value值默认值是提交查询 -->
+      <input
+        type="image"
+        src="../images/search.svg"
+        width="20"
+        alt="点击图片可提交表单数据"
+      />
+      <input type="reset" />
+    </form>
+    <hr />
+    <form action="#" enctype="multipart/form-data" method="POST">
+      <!-- 按照文件流的形式，不进行编码,采用post方式，get方式承载不了这么大的数据流 -->
+      头像: <input type="file" name="file" />
+      <button>提交</button>
+    </form>
+    <hr />
+    <!-- 使用disabled修饰的表单 不可修改且不进行表单数据的提交；readonly修饰的不可修改但会进行表单数据的提交 -->
+    <form action="#">
+      <input type="text" disabled value="禁用不提交" name="disable" />
+      <input type="text" readonly value="只读可提交" name="readonly" />
+      <input type="text" hidden value="隐藏可提交" name="hidden" />
+      <button>提交</button>
+    </form>
+    <hr />
+    <h1>form</h1>
+    <form action="#">
+      <fieldset>
+        <legend>基本信息组</legend>
+        用户名：<input type="text" size="100" /><br />
+        密码：<input type="password" /><br />
+        籍贯：<select name="" id="">
+          <optgroup label="江西省">
+            <option value="">南昌</option>
+            <option value="">九江</option>
+            <option value="">景德镇</option>
+          </optgroup>
+          <optgroup label="山东省">
+            <option value="">青岛</option>
+            <option value="">济南</option>
+          </optgroup>
+          <optgroup label="浙江省">
+            <option value="">杭州</option>
+            <option value="">绍兴</option>
+          </optgroup>
+        </select>
+      </fieldset>
+    </form>
+  </body>
+</html>

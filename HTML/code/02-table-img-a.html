@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Hyperlink-img-table</title>
+  </head>
+  <body>
+   
+    <div
+      id="top"
+      style="width: 1200px;height:900px;background-color: blueviolet;"
+    ></div>
+    <div
+      id="second"
+      style="width: 1200px;height:900px;background-color: rgb(201, 79, 184);"
+    ></div>
+    <!-- _parent、_top已废弃 、_blank在新选项卡中打开要显示的内容、_self在当前选项卡中打开-->
+    <a href="http://www.baidu.com" target="_blank">go to baidu</a>
+    <a
+      href="file:///C:\Users\xjm\Desktop\HTML+CSScode\briup\html_css\day01-label.html"
+      target="_blank"
+      >yesterday code</a
+    >
+    <a href="./day01-label.html" target="_blank">yesterday code</a>
+    <!-- id值用于锚点跳转 ,页面大于一页才看到效果-->
+    <a href="#top">back to top</a>
+    <a href="mailto:19979048694x@gmail.com">send email</a>
+
+    <hr />
+
+    <!-- img的属性width ；img既不是行内元素也不是块级元素，因为他行内显示且可设置宽高-->
+    <!-- 行内元素不可设置宽高，设置也无效与其他元素共享一行；块级元素可以设置宽高且独占一行 -->
+    <img src="../images/ti5mg.jpg" alt="图片迷路了" width="200" title="闹木耶波" />
+    <img src="../images/timg.jpg" alt="图片迷路了" width="200" />
+    <!-- 实际项目中让img块级显示 ，手动设置display:block-->
+
+    <hr />
+    <!-- thead tfoot tr一行 td一列 -->
+    <table
+      border="1px"
+      cellpadding="10"
+      cellspacing="10"
+      align="center"
+      bgcolor="pink"
+      width="600px"
+    >
+      <caption align="bottom">
+        表1-测试表
+      </caption>
+      <tbody>
+        <!-- tr>th*4 -->
+        <!-- >子级 +并列 -->
+        <tr>
+          <th>表头1</th>
+          <th>表头2</th>
+          <th>表头3</th>
+          <th>表头4</th>
+        </tr>
+        <tr align="center">
+          <td>第一列</td>
+          <td>第二列</td>
+          <td>第三列</td>
+          <td>第四列</td>
+        </tr>
+        <tr>
+          <td>第一列</td>
+          <td align="center">第二列</td>
+          <td>第三列</td>
+          <td>第四列</td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- 向前缩进shift+tab -->
+    <!-- tr*3>td*3 -->
+    <table
+      border="1px"
+      cellpadding="10"
+      cellspacing="10"
+      align="center"
+      bgcolor="pink"
+      width="600px"
+    >
+      <caption>
+        表2-学生信息表
+      </caption>
+      <thead>
+        <tr>
+          <td>学号</td>
+          <td>姓名</td>
+          <td>性别</td>
+          <td>班级</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <!-- 总计 -->
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+    <hr />
+    <!-- 单元格合并 -->
+    <table
+      border="1px"
+      cellpadding="10"
+      cellspacing="10"
+      align="center"
+      width="600px"
+    >
+      <colgroup>
+        <col />
+        <col span="3" bgcolor="pink" />
+      </colgroup>
+      <tr>
+        <td colspan="2">11</td>
+        <!-- <td>12</td>列合并，同时务必将合并的列删除 -->
+        <td>13</td>
+        <td>14</td>
+      </tr>
+      <tr>
+        <td>21</td>
+        <td>22</td>
+        <td>23</td>
+        <td>24</td>
+      </tr>
+      <tr>
+        <td rowspan="2">31</td>
+        <td>32</td>
+        <td>33</td>
+        <td>34</td>
+      </tr>
+      <tr>
+        <!-- <td>41</td>行合并，同时务必将合并的行删除 -->
+        <td>42</td>
+        <td>43</td>
+        <td>44</td>
+      </tr>
+    </table>
+  </body>
+</html>

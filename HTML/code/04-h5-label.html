@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>语义化标签</title>
+    <style>
+      header,
+      footer,
+      nav,
+      aside,
+      article,
+      section,
+      details,
+      img {
+        margin: 0 auto;
+        display: block;
+        text-align: center;
+      }
+      @font-face {
+        font-family: "MyNewFont"; /*字体名称*/
+        src: url("../font/Bayao-Hand.ttf"); /*字体源文件*/
+      }
+      body {
+        /* font-family: 'MyNewFont';
+        font-size: 30px; */
+        font: 25px "MyNewFont";
+      }
+      img {
+        width: 200px;
+      }
+      #logo {
+        width: 60px;
+      }
+      #search {
+        width: 20px;
+      }
+    </style>
+    
+  </head>
+  <body>
+    <header>
+      <h1>make company</h1>
+      <img id="logo" src="../images/logo.png" alt="图片迷路了" />
+      <input type="text" name="search" />
+      <input
+        type="image"
+        src="../images/search.svg"
+        width="20"
+        alt="点击图片可提交表单数据"
+      />
+      <nav>
+        <a href="">home</a>
+        <a href="">about</a>
+        <a href="">contact</a>
+      </nav>
+    </header>
+
+    <article>
+      <section class="introduce-myself">
+        my-name:<strong>jiam</strong><br />
+        age:20 <br />
+        gender:
+        <label for=""
+          ><input type="radio" name="gender" value="0" checked />girl</label
+        >
+        <label for=""><input type="radio" name="gender" value="1" />boy</label>
+        <br />
+        hobbies:
+        <label for=""
+          ><input
+            type="checkbox"
+            name="hobby"
+            value="1"
+            checked
+          />watching</label
+        >
+        <label for=""
+          ><input type="checkbox" name="hobby" value="2" checked />coding</label
+        >
+        <label for=""
+          ><input type="checkbox" name="hobby" value="3" checked />eating</label
+        >
+      </section>
+      <section>
+        <figure>
+          <img src="../images/jin.jpg" alt="图片迷路了" />
+          <figcaption>this is jinxuanya</figcaption>
+        </figure>
+      </section>
+
+      <aside></aside>
+    </article>
+    <details open>
+      <summary>HTML</summary>
+      <!-- 没写summary的话显示中文‘详细信息’ -->
+      <dd>
+        I'm going to explain what is html, fullname is hyper text markup
+        language.
+      </dd>
+    </details>
+    <footer>
+      🍂 &copy;jiam company make it
+      <address>19979048694X@gmail.com</address>
+    </footer>
+  </body>
+</html>
