@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>浮动和定位对块级元素产生的影响</title>
+    <style>
+        *{
+            margin:0;
+            padding: 0;           
+        }
+        body{
+            padding-bottom: 30px;
+        }
+        .bottom{
+            background-color: teal;
+            color: white;
+            position: fixed;
+            bottom: 0;
+           /*浮动，定位，会使块级元素的宽度将不再是100%，而是由内部内容撑起来，需手动设置*/
+            width: 100%;
+             /*end 去解决 永远看不见? 在body下加padding-bottom等于fixed在底部的元素的高度*/
+             height: 30px;
+             line-height: 30px;
+             text-align: center;
+        }
+        .parent{
+            border: 1px solid red;
+            overflow: hidden;
+        }
+        .one,.two,.three{
+            width: 100px;
+            height:100px;
+        }
+        .one{
+            background: teal;
+            float: right;
+        }
+        .two{
+            background: coral;          
+            clear: both;
+        }
+        .three{
+            background: cyan; 
+            float: left;
+        }
+    </style>
+</head>
+<body>
+    <!--  -->
+    start
+    <div class="parent">
+        <div class="one"></div>
+        <div class="two"></div>
+        <div class="three"></div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    end
+    <div class="bottom">&copy; xjm 201906</div>
+</body>
+</html>

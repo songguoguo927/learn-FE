@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      input[type="text"]:focus {
+        /* border: 1px solid coral; */
+        /* 盒子阴影：x正方向自左向右 y正方向自上向下 模糊距离*/
+        box-shadow: 3px 3px 3px coral;
+      }
+      input:disabled {
+        border: 1px solid red;
+      }
+      input:enabled {
+        border: 1px solid green;
+      }
+      input[type="radio"]:default{/*默认选中*/
+        outline: 1px solid red; /*外线，不占据屏幕空间*/
+      }
+      input[type="radio"]:checked{/*用户选中*/
+        outline: 1px solid blue;
+      }
+      /**input:valid 通过验证的表单控件
+      input:invalid 没通过验证的
+      input:required 必填的
+      input:optional 选填的
+      input:in-range 在范围内
+      input:out-of-range 在范围外*/
+      input[type="number"]:in-range{
+        border: 1px dotted green;
+      }
+      input[type="number"]:out-of-range{
+        border: 1px dotted red;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="#">
+      用户名：<input type="text" required/> 密码：<input disabled type="password" />
+      <br>
+      <input type="radio" name="gender" id="" checked>男
+      <input type="radio" name="gender" id="">女
+      <br>
+      年龄：<input type="number" name="age" min="10" max="50">
+      <input type="submit" value="提交" />
+    </form>
+  </body>
+</html>

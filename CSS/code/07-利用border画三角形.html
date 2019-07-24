@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>溢出处理和画三角形</title>
+    <style>
+      p {
+        width: 300px;
+        height: 100px;
+        border: 1px solid red;
+        font-family: "字魂78号-空灵体";
+        /* overflow: auto; */
+        /* overflow: scroll; */
+        /* overflow: hidden;
+        text-overflow: ellipsis;
+        white-space:nowrap; */
+        display:-webkit-box;
+        overflow:hidden;
+        -webkit-line-clamp:2;   
+        -webkit-box-orient:vertical;
+        text-overflow: ellipsis;
+
+      }
+      .img-bg {
+        height: 150px;
+        width: 250px;
+        border: 10px solid teal;
+        /* background-attachment: fixed; */
+        /* background-clip: border-box; */
+        background-position: center;
+        background-image: url("../images/jam.png");
+        background-repeat: no-repeat;
+        background-size: 80px;
+        /* background-color: blueviolet; */
+      }
+      /*设置border，画三角形*/
+      .triangle1 {
+        width: 0;
+        height: 0;
+        border-width: 50px;
+        border-style: solid;
+        border-color: transparent #ffcccc transparent transparent;
+        /*通过更改有颜色的一边和transparent（透明边）*/
+      }
+      /*三角形旋转，实现不同角度的三角形*/
+      .triangle2 {
+        width: 0;
+        height: 0;
+        border-width: 50px;
+        border-style: solid;
+        border-color: transparent #0099cc transparent transparent;
+        transform: rotate(120deg); /*顺时针旋转120°，加负号为逆时针*/
+      }
+      .sprites {
+        width: -300px;
+        height: -133px;
+        background-image: url("../images/sprite.jpg");
+        background-position: 255px 240px;
+      }
+      img {
+        float: right;
+      }
+      p {
+        clear: right;
+      }
+      /*箭头 两个三角形错开1px，类似层叠消融*/
+      .left-arrow {
+        position: absolute;
+      }
+      .left-arrow:before,
+      .left-arrow:after {
+        position: absolute;
+        content: "";
+        border-top: 10px transparent dashed;
+        border-left: 10px transparent dashed;
+        border-bottom: 10px transparent dashed;
+        border-right: 10px #fff solid;
+      }
+      .left-arrow:before {
+        border-right: 10px #0099cc solid;
+      }
+      .left-arrow:after {
+        left: 1px; /*覆盖并错开1px*/
+        border-right: 10px #fff solid;
+      }
+      .border1{
+          border: 1px solid teal;
+      }
+      .border2{
+          border-style: solid;
+          border-bottom-width: 10px;
+          border-bottom-color: yellow;
+          border-top-width: 10px;
+          border-top-color: #0099cc;
+          border-left-width: 10px;
+          border-left-color:#ffcccc;
+          border-right-width: 10px;
+          border-right-color:blueviolet;
+          /* width: 10px; */
+          /* height: 10px; *//*可加上进行测试*/
+      }
+    </style>
+  </head>
+  <body>
+      <div class="border1"></div>
+      <br>
+      <br>
+      <br>
+      <div class="border2"></div>
+
+    <i class="left-arrow"></i>
+    <img src="../images/nini8.jpg" width="200px" />
+    <p>
+      【环球时报-环球网综合报道 记者
+      王盼盼】2019年3月25日，外交部发言人耿爽主持召开例行记者会，部分实录如下。
+      问：韩国媒体最近就雾霾问题做了一些报道，认为韩国空气质量不好其实和本地的家用锅炉有关系，现在韩国有360万家庭使用锅炉，冬季又是使用高峰期，所以韩国的雾霾成因不能一味甩锅给中国。请问中方如何看待这样的报道？另外在治霾方面，双方有什么合作？
+      答：我们注意到有关报道，认为韩国有关空气专家的观点是理性的、客观的。关于中国的空气污染是否会影响到韩国，中国环保主管部门和权威专家也已经给出了专业和详尽的解释，你可以查阅。
+      事实上，中韩环境合作一直都是双边合作的重要组成部分。两国环境部就加强大气污染防治、推进中韩环境合作中心建设等进行了深入交流，并签署了相关工作方案。中国环境科学研究院与韩国国立环境研究院还共同成立了“中韩空气质量联合研究工作组”，就相关领域开展分析研究工作。
+      中方从自身发展出发，会把加快治理大气污染、坚决打赢蓝天保卫战作为生态环境保护的头等大事。同时，我们也愿与韩方一道，共同致力于加强大气领域交流合作，共同寻求雾霾问题解决之道，为改善两国环境质量、促进区域和全球可持续发展作出努力和贡献。
+    </p>
+    <div class="img-bg"></div>
+    <div class="sprites"></div>
+    <div class="triangle1"></div>
+    <div class="triangle2"></div>
+
+  </body>
+</html>

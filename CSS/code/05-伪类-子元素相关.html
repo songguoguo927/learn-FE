@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>选择子元素相关伪类</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      div {
+        border: 1px solid red;
+        margin: 10px;
+      }
+      /*选中每个div的第一个孩子*/
+      div > *:first-child {
+        color: aqua;
+      }
+
+      div > *:last-child {
+        font-size: 1.6em;
+      }
+      /*选中每个div的第二个孩子*/
+      div > *:nth-child(2) {
+        background-color: blueviolet;
+      }
+      /* :nth-last-child(n) 倒数 里面可为表达式 奇数位孩子2n+1 或者odd 偶数孩子 2n 或者even */
+      /*表格中设置宽高，给行tr设置高，给列td，th设置宽*/
+      
+      table{
+        border:1px solid #444;
+        border-collapse: collapse;/*表格边框合并，==原先的cellspacing=0*/
+      }
+      tr{
+        height: 50px;
+      }
+      th,td{
+        width: 100px;
+        border: 1px solid #444;/*单个单元格需要额外设置边框*/
+      }
+      thead>tr{
+        background-color: #aaa;
+      }
+      /*实现表格隔行变色*/
+      tbody>tr:nth-child(even){
+        background-color: #ccc;
+      }
+      tbody>tr:hover{
+        background-color: #eee;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <p>1p</p>
+      <p>2p</p>
+      <span>1span</span>
+      <span>2span</span>
+    </div>
+    <div>
+      <p>1p</p>
+      <p>2p</p>
+      <span>1span</span>
+      <span>2span</span>
+      <span>3span</span>
+      <span>4span</span>
+    </div>
+    <div>
+      <span>1span</span>
+    </div>
+    <table>
+      <thead>
+          <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

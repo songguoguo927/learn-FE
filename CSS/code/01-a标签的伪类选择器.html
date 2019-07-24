@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>属性选择器</title>
+  </head>
+  <style>
+      a{
+          text-decoration: none;
+      }
+      /*a标签伪类*/
+      /*设置a标签未访问过的样式*/
+      a:link{
+          color: coral;
+      }
+      /*设置a标签访问过后的样式*/
+      a:visited{
+        color: gray;
+      }
+      a:hover{
+        font-size: 20px;
+        cursor: wait;/*鼠标的样式，默认pointer 小手*/
+      }
+      a:active{
+        color:hotpink;
+      }
+      span{
+          cursor: pointer;
+      }
+    .btn-div:hover > .list-div {
+      display: block;
+    }
+    .btn-div:hover + p {
+      display: none;
+    }
+    .list-div {
+      display: none;
+    }
+  </style>
+  <body>
+    <div class="btn-div">
+      <button>show menu</button>
+      <!-- 小tip:将显示的元素放于触发的元素内部  ,
+解决因从button上移开，list消失的问题      -->
+      <div class="list-div">
+        <ul>
+          <li>HTML</li>
+          <li>CSS</li>
+          <li>JavaScript</li>
+          <li>Node</li>
+        </ul>
+      </div>
+    </div>
+    <p>悬停隐藏</p>
+    <a href="#">click1</a>
+    <a href="#">click2</a>
+    <span>ohooh</span>
+  </body>
+</html>

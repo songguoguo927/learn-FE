@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>position定位</title>
+    <style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    div{
+        width: 100px;
+        height: 100px;
+        background-color: pink;
+    }
+    .one{
+        background-color: cyan;
+        position: absolute;/*脱离文档流，原先的位置被正常文档流里的元素占用*/
+        left:5px;
+        top: 5px;/*如果没有祖先定位元素时，相对于视口区定位*/
+    }
+    .two{
+        background-color: coral;
+        position: relative;/*不脱离文档流，原先位置保留*/
+        left: 10px; /*相对原先的位置进行定位，如果没有设置left，top，.two位置不变，而只是加了个头衔-定位元素*/
+        top:20px;
+    }
+    .three{
+        background-color: blueviolet;
+        position: fixed; /*脱离文档流*/
+        bottom: 0;
+        left: 200px;/*只相对于视口区固定定位,永远固定，无论滚动条是否下拉，可以用来做小广告和回到顶部等。*/
+    }
+    .four-outer{
+      width: 200px;
+      height: 200px;
+      background-color: olivedrab;
+      position: relative;
+      /* z-index: 1;无效 */
+    }
+    .four-inner{
+      position:absolute;
+      left:20px;
+      top:20px;/*如果有祖先定位元素时，相对于祖先定位元素定位*/
+    }
+    
+    </style>
+</head>
+<body>
+    <div class="one">absolute</div>
+    <div class="two">relative</div>
+    <div class="three">fixed</div>
+    <div class="four-outer">
+      parent-relative
+      <div class="four-inner">child-absolute</div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</body>
+</html>

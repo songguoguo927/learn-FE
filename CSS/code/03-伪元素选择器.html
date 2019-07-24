@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>伪元素和继承</title>
+    <style>
+    section>p::before{
+        content: '*';
+        color: red;/**/
+        vertical-align: middle;
+    }
+    section>p::after{
+        content: '.';
+        color: red;/**/
+    }
+    form>span::before{
+        content: '*';
+        color: red;
+    }
+    /*js起初出现为了补充表单验证*/
+    div::first-letter{
+        font-size: 1.8em;
+        color: coral;
+    }
+    div::first-line{
+        color: red; /*不覆盖对第一个样式的操作*/
+    }
+    div::selection{
+        color:white;
+        background-color: teal;;
+    }
+    div{
+        border: 1px solid teal;
+    }
+    p{
+        border: inherit;
+    }
+    </style>
+</head>
+<body>
+    <div>
+        的火气很大困难分红为v和v额去家乐福年纪了完全免费卡拉叫什么好伐卡是建行的卡说的话
+        <p>balabalabalabal</p>
+    </div>
+    <article>
+        <section>
+            <p>balabalabalabal</p>
+            <p>balabalabalabal</p>
+            <p>balabalabalabal</p>
+        </section>
+    </article>
+    <form action="#">
+            <span>用户名：</span><input type="text" required/> 
+            <span>密码：</span><input disabled type="password" required/>
+            <br>            
+            <input type="submit" value="提交" />
+          </form>
+</body>
+</html>

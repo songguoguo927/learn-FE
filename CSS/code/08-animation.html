@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>动画</title>
+    <style>
+      div {
+        width: 100px;
+        height: 100px;
+        background-color: pink;
+        animation-name: myani;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+        /* 动画的执行顺序，默认从第一帧到最后一帧 */
+        /* animation-direction: reverse; 从最后一帧到第一帧 */
+        animation-direction: alternate;/*奇数次，从第一帧到最后一帧，偶数次从最后一帧到第一帧；alternate-reverse 刚好相反*/
+        animation-delay: 2s;/*动画延迟执行*/
+        /*填充模式：等待颜色填充，而动画不执行*/
+        /* animation-fill-mode: backwards;将第一帧的动画填充到元素上 */
+        animation-fill-mode: forwards;/*在动画结束的时候使用结束的帧去填充元素，默认不填充*/
+
+        /*速度曲线，动画在执行过程中的变化速率  关键字取值 ease ease-in ease-out ease-in-out linear*/
+        animation-timing-function: linear;
+        
+    }
+    div:hover{/*鼠标悬停，动画暂停*/
+        animation-play-state: paused;
+    }
+      @keyframes myani {
+        from {
+          /*开始时最好与初始样式保持一致防止效果突变，在不一致时我们还可以设置填充模式*/
+          width: 100px;
+          height: 100px;
+          background-color: cyan;
+        }
+        to {
+          width: 400px;
+          height: 100px;
+          background-color: coral;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div></div>
+  </body>
+</html>

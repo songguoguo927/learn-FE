@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>变形</title>
+    <style>
+    div{
+        width:200px;
+        height: 200px;
+        background-color: pink;
+        /* transform: rotate(30deg)默认是绕Z轴方向 */
+        animation: myani 2s   ;
+         /* 速记animation: name duration timing-function delay iteration-count direction fill-mode; */
+         /* 更改旋转原点 */
+         /* transform-origin: right top;/*20px 20px */
+         margin: 200px;
+    }
+    @keyframes myani{
+        from{
+            /* transform:rotateZ(0deg) */
+            /* transform: skew(15deg) */
+            transform: scale(1)
+        }
+        to{
+            /* transform: rotateZ(360deg) */
+            /* transform: skew(45deg) */
+            transform: scale(.3)
+            /* transform: scale(2) */
+
+        }
+    }
+    </style>
+</head>
+<body>
+    <div>hello</div>
+</body>
+</html>
