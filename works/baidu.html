@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>baidu</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      /*导航菜单样式*/
+      .menu {
+        width: 100%;
+        height: 34px;
+        line-height: 34px;
+        text-align: right;
+        font-size: 0.8em;
+        word-spacing: 12px;
+        border-bottom: 1px solid rgb(235, 230, 230);
+      }
+      .menu .mnav {
+        color: #555;
+      }
+      .menu a {
+        color: #999;
+      }
+      .menu .more-product {
+        display: inline-block;
+        text-align: center;
+        width: 71px;
+        background-color: #38f;
+        color: white;
+        text-decoration: none;
+      }
+      .menu .mnav {
+        font-weight: bold;
+      }
+      .logo-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 500px;
+        text-align: center;
+      }
+      .logo-img {
+        display: block;
+        width: 270px;
+        margin: 0 auto;
+      }
+      .form {
+        width: 500px;
+        display: flex;
+        margin: 0 auto;
+      }
+      input {
+        width: 80%;
+        height: 30px;
+        padding: 1px;
+      }
+      button {
+        width: 18%;
+        height: 30px;
+        border: none;
+        font-size: 14px;
+        background-color: #38f;
+        color: white;
+        border-bottom: 5px solid #38f;
+        line-height: 30px;
+      }
+      /*搜索关键词联想框样式*/
+      #search {
+        position: absolute;
+        margin-top: 30px;
+        text-align: left;
+        border-left: 1px solid rgb(235, 230, 230);
+        border-right: 1px solid rgb(235, 230, 230);
+        border-bottom: 1px solid rgb(235, 230, 230);
+        width: 400px;
+        padding-left: 12px;
+      }
+      #search li {
+        list-style: none;
+        margin-top: 7px;
+      }
+      #search a {
+        text-decoration: none;
+        color: #555;
+      }
+      /*底部内容样式*/
+      #bottom_container {
+        width: 100%;
+        position: fixed;
+        bottom: 18px;
+        text-align: center;
+        font-size: 0.8em;
+        color: gray;
+      }
+      #bottom_container a {
+        text-decoration: none;
+        color: gray;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="menu">
+      <a href="#" class="mnav">新闻</a>
+      <a href="#" class="mnav">hao123</a>
+      <a href="#" class="mnav">地图</a>
+      <a href="#" class="mnav">视频</a>
+      <a href="#" class="mnav">贴吧</a>
+      <a href="" class="mnav">学术</a>
+      <a href="#"><span>宋果果729</span></a>
+      <a href="javascript:;"><span>设置</span></a>
+      <a href="#" class="more-product"> 更多产品</a>
+    </div>
+    <div class="logo-container">
+      <img class="logo-img" src="./images/bd_logo1.png" alt="" />
+      <div class="form">
+        <input type="text" autofocus id="text" autocomplete="off"/>
+        <div class="camera">
+          <div class="camera1"></div>
+          <div class="camera2"></div>
+        </div>
+        <button>百度一下</button>
+        <div id="search">
+          <ul></ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="bottom_container">
+      <a href="#" target="_blank">设为首页</a>
+      <span class="copyright-text"
+        ><span>&copy;2019&nbsp;Baidu&nbsp;</span
+        ><a href="#" target="_blank">使用百度前必读</a>&nbsp;<a
+          href="#"
+          target="_blank"
+          >意见反馈</a
+        >&nbsp;<span>京ICP证030173号&nbsp;</span
+        ><img width="13" height="16" src="./images/copy_rignt_24.png" />
+      </span>
+
+      <div class="recordcode">
+        <a href="#" target="_blank"
+          ><img
+            width="13"
+            height="16"
+            src="./images/icon-police.png"
+            alt=""
+          />京公网安备11000002000001号</a
+        >
+      </div>
+    </div>
+    <script>
+      /*20190709*/
+      var commonPre =
+        "https://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&prod=pc&from=pc_web&sugsid=1438,21122,20698,29238,28518,29099,28839,29221&";
+      var ul = document.getElementsByTagName("ul")[0];
+      var txt = document.getElementById("text");
+
+      txt.onkeyup = function() {
+        var val = txt.value;
+        var script = document.createElement("script");
+        script.src = `${commonPre}&wd=${val}&cb=jQuery110209256834795658402_1562663426868`;
+        document.body.appendChild(script);
+      };
+      function jQuery110209256834795658402_1562663426868(json) {
+        ul.innerHTML = "";
+        json.g.forEach(function(el) {
+          var li = document.createElement("li");
+          li.innerHTML = "<a href=commonPre+'&wd='+val>" + el.q + "</a>";
+          ul.appendChild(li);
+        });
+      }
+    </script>
+  </body>
+</html>

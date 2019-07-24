@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>同心圆放缩</title>
+    <style>
+    .out-circle{
+        border: 5px solid coral;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        animation: myani 2s infinite alternate ;
+        position: absolute;
+    top: 120px;
+    left: 200px;
+    }
+    @keyframes myani{
+        0%{
+            transform:scale(1)
+        }
+        100%{
+            transform: scale(1.2);
+        }
+    }
+    .inner-circle{
+        border: 10px solid teal;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        animation: myani2 2.5s infinite alternate ;
+        margin: 13px auto;
+    }
+    @keyframes myani2{
+        0%{
+            transform:scale(1)
+        }
+        100%{
+            transform: scale(.8);
+        }
+    }
+    </style>
+</head>
+<body>
+    <div class="out-circle"><div class="inner-circle"></div></div>
+</body>
+</html>

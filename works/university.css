@@ -1,0 +1,111 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0 auto;
+  min-width: 1000px;
+  max-width: 1400px;
+}
+
+/* Layout */
+
+section {
+  float: left;
+  width: 50%;
+}
+
+aside {
+  float: left;
+  width: 30%;
+}
+
+nav {
+  float: left;
+  width: 20%;
+}
+
+footer {
+  clear: both;
+}
+
+header,
+section,
+aside,
+nav,
+footer {
+  padding: 20px;
+}
+
+/* header and footer */
+
+header,
+footer {
+  border-top: 5px solid #a66;
+  border-bottom: 5px solid #a66;
+}
+
+/* WRITE YOUR CODE BELOW HERE */
+body {
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  word-spacing: 2.5px;
+  /* font-family: "字魂51号-青青子吟体"; */
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+/*字体选择，标题和内容用不同字体*/
+h1,
+h2 {
+  font-size: 1.5em;
+  letter-spacing: 3px;
+}
+p {
+  font-size: 1.2em;
+}
+a {
+  font-size: 1em;
+}
+h1 {
+  text-align: center;
+}
+/*为每个标题后、<section>元素中的第一段文字设置20px的文本缩进。*/
+section > h2 + p {
+  text-indent: 20px;
+}
+a:link {
+  color: #a66;
+}
+a:visited {
+  color: #a66;
+}
+a:hover {
+  color: #a66;
+  text-decoration: none;
+}
+a:focus {
+  color: #a66;
+  text-decoration: none;
+}
+a:active {
+  font-size: 2em;
+}
+/*在外部链接右侧插入外部链接图标。*/
+section p a::after {
+  content: url("./images/icon-police.png");
+}
+li {
+  list-style: square;
+}
+nav ul li {
+  list-style: none;
+  font-size: 2em;
+  border: 2px solid #a66;
+  width: 98%;
+  height: 80px;
+  text-align: center;
+  line-height: 80px;
+  margin: 40px auto;
+}
+nav ul li a {
+  text-decoration: none;
+}

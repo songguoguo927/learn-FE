@@ -1,0 +1,90 @@
+a {
+  text-decoration: none;
+}
+body {
+  background: url("./images/reg-bg.png") no-repeat fixed;
+  background-size: 100% 100%;/*解决图片横向拉伸*/
+  height: 764px;
+  min-width: 480px;
+  margin: 0;
+}
+/*设置蒙层*/
+.body-container{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,.3);
+}
+.top-tips {
+  padding-top: 12px;
+  text-align: center;
+  word-spacing: 325px;
+}
+.top-tips a {
+  color: white;
+  font-size: 12px;
+}
+.form {
+  width: 476px;
+  height: 527px;
+  margin: 15px auto;
+  text-align: center;
+  background-color: white;
+  position: relative;
+  border-radius: 2px;
+}
+.form img {
+  width: 106px;
+  margin-top: 42px;
+  margin-bottom: 20px;
+}
+.form input {
+  box-sizing: border-box;
+  outline: 0;
+  border: 2px solid #ebebeb;
+  text-indent: 15px;
+  width: 75%;
+  height: 42px;
+  display: block;
+  margin: 18px auto;
+}
+.form input::-webkit-input-placeholder{
+  color: rgb(153, 153, 153,0.8);
+}
+.form button {
+  position: absolute;
+  right: 70px;
+  top: 128px;
+  width: 80px;
+  height: 26px;
+  background: #eee;
+  line-height: 26px;
+  font-size: 12px;
+  color: #999;
+  cursor: pointer;
+  padding: 0 10px;
+  border: none;
+  border-radius: 2px;
+}
+.form p {
+  color: #999;
+  font-size: 13.2px;
+}
+.form input[type="submit"] {
+  background: #ff552e;
+  color: white;
+  height: 42px;
+  border: none;
+}
+.form a {
+  color: #ff552e;
+}
+.bottom-tips {
+  text-align: center;
+  word-spacing: 70px;
+  margin-top: 30px;
+}
+.bottom-tips a {
+  color: white;
+  font-size: 12px;
+}

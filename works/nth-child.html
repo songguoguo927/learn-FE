@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>隔行变色表格</title>
+    <style>
+    table{
+        border-collapse: collapse;
+        border:1px solid gray;
+    }
+    tr{
+        height: 30px;
+    }
+    td,th{
+        width: 150px;
+        border: 1px solid #444;
+    }
+    tbody>tr:nth-child(even){
+        background-color: #aaa;
+    }
+    tbody>tr:hover{
+        background-color: yellowgreen;
+      }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>wq</th>
+                <th>ewq</th>
+                <th>eq</th>
+                <th>qe</th>
+                <th>eq</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td></td>
+                <td></td>
+                <td>q</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>wq</td>
+                <td></td>
+                <td>da</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
