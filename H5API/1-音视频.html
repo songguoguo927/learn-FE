@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <audio src="./夜车-曾轶可.mp3" autoplay controls muted>
+      <!-- <source src=""/> -->
+    </audio>
+    <!-- 谷歌下要想自动播放需要设置静音属性muted -->
+    <video src="./mv.webm" autoplay controls muted width="200">
+      <!-- <source src="" /> -->
+    </video>
+    <br>
+    <!-- 自定义的媒体播放 -->
+    <div id="controlBtns">
+        <button>play</button>
+    <button>pause</button>
+    <button id="toggle">switch-切换</button>
+    <button>fast</button>
+    <button>slow</button>
+    <button>2 rate</button>
+    <button>0.5 rate</button>
+    <button>音量+</button>
+    <button>音量-</button>
+    </div>
+    <br>
+    <video src="./mv.webm"   width="400" id="myVideo"></video>
+    <script>
+    var btns = document.getElementById('controlBtns');
+    var video = document.getElementById('myVideo');
+    var toggle = document.getElementById('toggle');
+    /*一个按钮实现两个功能*/
+    toggle.onclick = function(){
+        console.log(video.paused)
+        if(video.paused){          
+            video.play()
+            this.innerText = 'pause/play';
+        }else{
+            video.pause();
+            this.innerText = 'play/pause';
+        }
+        
+    }
+    btns.onclick = function(e){
+        var text = e.target.innerText;
+        var size = 0.1;
+        switch(text){
+            case 'play':
+            video.play();
+            break;
+            case 'pause':
+            video.pause();
+            break;
+            case 'fast':
+            video.currentTime += 10;
+            break;
+            case 'slow':
+            video.currentTime -= 10;
+            break;
+            case '2 rate':
+            video.playbackRate = 2;
+            break;
+            case '0.5 rate':
+            video.playbackRate = .5;
+            break;
+            case '音量+':
+            if(video.volume==1){
+                return;
+            }
+            video.volume+=size;
+            break;
+            case '音量-':
+            if(video.volume==0){
+                return;
+            }
+            video.volume-=size;
+            break;
+        }       
+    }
+        //将快进快退与左右键绑定，同理音量上下键      
+    document.onkeydown = function(e){
+        console.log(e.keyCode) //左上右下 37 38 39 40
+        var code = e.keyCode;
+        if(code===37){
+            video.currentTime -= 10;
+        }
+        if(code===38){
+            if(video.volume==1){
+                return;//解决超出范围报红
+            }
+            video.volume += .1;           
+        }
+        if(code===39){
+           video.currentTime += 10;            
+        }
+        if(code===40){
+            if(video.volume<=0.1){
+                return;
+            }
+            video.volume -= .1;            
+        }
+    }
+    </script>
+  </body>
+</html>
+
+<!-- 一个想法，做一个类似bili的播放器 -->

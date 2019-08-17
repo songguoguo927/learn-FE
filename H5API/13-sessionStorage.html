@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>会话存储</title>
+  </head>
+  <body>
+    <!-- 令牌 jwt token验证 -->
+    <script>
+      //属于window对象
+      // console.log(sessionStorage)
+      // console.log(localStorage)
+
+      //存储数据
+      sessionStorage.setItem("name", "xjm");
+      sessionStorage.setItem("age", "18");
+      sessionStorage.setItem("obj", JSON.stringify({ name: "xjm", age: 18 }));
+
+      //获取数据
+      var age = sessionStorage.getItem("age");
+      var obj = JSON.parse(sessionStorage.getItem("obj"));
+      console.log(age, obj);
+      //获取索引位置上的key
+      console.log(sessionStorage.key(1)); //age
+      //localStorage跨选项卡 关闭浏览器依然存在，因为它存于磁盘中，除非手动清除
+      console.log(localStorage.getItem('email'))
+    </script>
+  </body>
+</html>

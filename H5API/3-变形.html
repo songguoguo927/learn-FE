@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>变形</title>
+	<style>
+		canvas{
+			border:1px solid red;
+		}
+	</style>
+	<script>
+		window.onload = function(){
+			var canvas = document.getElementById('canvas');
+			var context = canvas.getContext('2d');
+			// 坐标轴的变形
+			context.fillRect(0,0,100,100);
+			// 平移坐标轴
+			/*context.translate(100,100);
+			context.fillRect(0,0,100,100);*/
+			context.translate(100,100);
+			// // 缩小或者放大坐标轴
+			context.scale(0.5,0.5);
+			// // 旋转坐标轴
+			context.rotate(Math.PI/4);
+
+			context.fillRect(0,0,100,100);
+		}
+	</script>
+</head>
+<body>
+	<canvas id="canvas" width="400px" height="400px"></canvas>
+</body>
+</html>

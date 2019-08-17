@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>画布canvas</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+  <style>
+    #canvas {
+      border: 1px solid #066;
+    }
+  </style>
+  <body>
+    <canvas id="canvas" width="500" height="654"></canvas>
+    <script>
+      //绘制图片
+      var canvas = document.getElementById("canvas");
+      var ctx = canvas.getContext("2d");
+      // 创建图像节点
+      var img = new Image();
+      // console.log(img);
+      img.src = "./nini.jpg";
+      img.onload = function() {
+        ctx.drawImage(img, 0, 0, 300, 400);
+      };
+      // 放大镜
+      // 图片被放大区域的中心点，也是放大镜的中心点
+     
+      // image  鼠标滑过，获取鼠标所在的点(event.clientX screenX)，获取左上角点。方形区域，放大。
+      canvas.onmousemove = function(e) {
+        // console.log(e.clientX, e.screenX);
+          ctx.clearRect()
+        ctx.beginPath();
+      ctx.arc(e.clientX, e.clientY, 70, 0, Math.PI * 2);
+    //   ctx.closePath();
+      ctx.clip();
+      ctx.scale(1.5,1.5)
+        
+      };
+
+      // 图像裁切
+      /*ctx.beginPath();
+      ctx.arc(170, 100, 70, 0, Math.PI * 2);
+      ctx.closePath();
+        //  ctx.fill();
+      // 只有在裁切范围内的才能显示出来
+      ctx.clip();*/
+
+      // 绘制文本
+      ctx.font = "30px sans-serif";
+      ctx.strokeText("hello", 300, 100);
+      // 参数 文本,开始绘制的位置x,y
+      //   ctx.fillText("hello", 300, 100);
+    </script>
+  </body>
+</html>

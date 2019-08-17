@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>画布canvas</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+  <style>
+    /*canvas只认本身的width height属性 即canvas.width....
+而style中的width，height不影响canvas本身的W,H属性 只影响可视效果*/
+    #canvas1 {
+      border: 1px solid #066;
+    }
+    #canvas2 {
+      width: 400px;
+      height: 400px;
+      border: 1px solid red;
+    }
+    #canvas3 {
+      width: 400px;
+      height: 400px;
+      border: 1px solid #060;
+      color: rgba(247, 247, 102, 1);
+    }
+  </style>
+  <body>
+    <!--画布:承载图形的画布，不用加单位，默认为px-->
+    <canvas id="canvas1" width="400" height="400"></canvas>
+    <canvas id="canvas2"></canvas>
+    <canvas id="canvas3" width="400" height="400"></canvas>
+    <script>
+      //绘制矩形
+      var canvas1 = document.getElementById("canvas1");
+      var ctx1 = canvas1.getContext("2d");
+      ctx1.fillStyle = "pink";
+      ctx1.fillRect(10, 10, 100, 100);
+      /* ctx.clearRect(x,y,width,height) 擦除画布 定位置，定宽高*/
+      ctx1.clearRect(20, 20, 25, 35);
+      ctx1.clearRect(50, 20, 25, 35);
+      ctx1.clearRect(30, 50, 25, 35);
+      ctx1.clearRect(30, 80, 25, 35);
+
+      var canvas2 = document.getElementById("canvas2");
+      var ctx2 = canvas2.getContext("2d");
+      ctx2.fillStyle = "pink";
+      ctx2.fillRect(10, 10, 100, 100); //高度被拉成原来的两倍，变形了
+      //绘制圆形
+      var canvas3 = document.getElementById("canvas3");
+      var ctx3 = canvas3.getContext("2d");
+      ctx3.fillStyle = "pink";
+      ctx3.beginPath();
+      ctx3.arc(70, 18, 15, 0, Math.PI * 2, true);
+      ctx3.closePath();
+      ctx3.fill();
+      //绘制笑脸
+      ctx3.beginPath();
+      ctx3.arc(130, 215, 60, 0, 2 * Math.PI, false); //false顺时针
+      ctx3.fillStyle = "rgba(247, 247, 102, 1)";
+      ctx3.fill();
+
+      ctx3.beginPath();
+      ctx3.arc(100, 200, 15, -0.1 * Math.PI, -0.9 * Math.PI, true);
+      ctx3.stroke();
+
+      ctx3.beginPath();
+      ctx3.arc(160, 200, 15, -0.1 * Math.PI, -0.9 * Math.PI, true);
+      ctx3.stroke();
+
+      ctx3.beginPath();
+      ctx3.arc(130, 230, 30, 0.1 * Math.PI, 0.9 * Math.PI, false);
+      ctx3.stroke();
+      //绘制直线
+      ctx3.beginPath();
+      //起点
+      ctx3.moveTo(0, 0);
+      //直线的终点
+      ctx3.lineTo(100, 100);
+      ctx3.lineTo(150, 70);
+      ctx3.lineTo(250, 250);
+      //  ctx3.closePath(); //有时可以借助关闭路径的特性去绘制三角形/多边形，不关闭可绘制折线图
+
+      ctx3.stroke();
+
+      //绘制线上的转折点
+      dot(100, 100);
+      dot(150, 70);
+      dot(250, 250);
+      function dot(x, y) {
+     
+        ctx3.beginPath();
+        ctx3.arc(x, y, 3, 0, 2 * Math.PI, true);
+        ctx3.closePath();
+        ctx3.fillStyle ="skyblue";
+        ctx3.fill();
+      }
+
+      //绘制渐变  --是一种填充模式 g
+      //声明稍稍复杂
+      // 1，线性渐变
+      // 2，径向渐变
+      ctx3.beginPath();
+      // var g = ctx3.createLinearGradient(0, 350, 100, 350);
+      var g=ctx3.createRadialGradient(50,350,20,50,350,40)
+      g.addColorStop(0, "pink");
+      g.addColorStop(1, "skyblue");
+      //使用简单
+      ctx3.fillStyle = g;
+      ctx3.fillRect(0, 300, 100, 100)
+      // ctx3.fill);
+
+    </script>
+  </body>
+</html>

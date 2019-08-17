@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>拖动-随机排布</title>
+    <style>
+      div.wrap1,
+      div.wrap2 {
+        height: 100px;
+        width: 100%;
+        border: 1px solid;
+        margin-bottom: 10px;
+      }
+      div.box {
+        width: 100px;
+        height: 100px;
+        text-align: center;
+        color: white;
+        display: inline-block;
+      }
+      div.box span {
+        line-height: 100px;
+        font-size: 2rem;
+      }
+      .box1 {
+        background: hsl(100, 30%, 30%);
+      }
+      .box2 {
+        background: hsl(140, 30%, 30%);
+      }
+      .box3 {
+        background: hsl(180, 30%, 30%);
+      }
+      .box4 {
+        background: hsl(220, 30%, 30%);
+      }
+      .box5 {
+        background: hsl(260, 30%, 30%);
+      }
+      .box6 {
+        background: hsl(300, 30%, 30%);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap1 wrap"></div>
+    <div class="wrap2 wrap"></div>
+    <div class="box box1" id="1" data-id="a"><span>1</span></div>
+    <div class="box box2" id="2" data-id="b"><span>2</span></div>
+    <div class="box box3" id="3" data-id="c"><span>3</span></div>
+    <div class="box box4" id="4" data-id="d"><span>4</span></div>
+    <div class="box box5" id="5" data-id="e"><span>5</span></div>
+    <div class="box box6" id="6" data-id="f"><span>6</span></div>
+
+    <script>
+      var wraps = document.querySelectorAll(".wrap");
+      var boxes = document.querySelectorAll(".box");
+
+      boxes.forEach(item => {
+        item.draggable = true;
+      });
+      document.ondragstart = function(e) {
+        // console.log("dragstart");
+        // console.log(e.target);
+        e.target.style.opacity = 0.5;
+        e.dataTransfer.setData("text/html", e.target.id);
+      };
+      //  document.ondrag = function(e){
+      //     console.log('drag')
+      //     console.log(e.target)
+
+      //  }
+      document.ondragend = function(e) {
+        // console.log("dragend");
+        // console.log(e.target);
+        e.target.style.opacity = 1;
+      };
+      //  document.ondragenter = function(e){
+      //     console.log('dragenter')
+      //     console.log(e.target)
+
+      //  }
+      document.ondragover = function(e) {
+        // console.log("dragover");
+        e.preventDefault();
+        // console.log(e.target);
+      };
+      document.ondrop = function(e) {
+        // console.log("drop");
+        // console.log(e.target);
+        var id = e.dataTransfer.getData("text/html");
+        console.log("id=" + id);
+        e.target.appendChild(document.getElementById(id));
+      };
+      //  document.ondragleave = function(e){
+      //     console.log('dragleave')
+      //     console.log(e.target)
+      //  }
+    </script>
+  </body>
+</html>

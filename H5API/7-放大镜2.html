@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    canvas {
+      display: block;
+      margin: 0 auto;
+      border: 1px solid #222;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="my-canvas"></canvas>
+  <canvas id="off-canvas" style="display: none;"></canvas>
+  <script>
+    var isMouseDown = false,
+      scale = 1.0
+    var canvas = document.querySelector("#my-canvas")
+    var offCanvas = document.querySelector("#off-canvas") // 离屏 canvas
+    var ctx = canvas.getContext("2d")
+    var offCtx = offCanvas.getContext("2d") // 离屏 canvas 的 Context对象
+    var img = new Image()
+
+    window.onload = function () {
+      img.src = "./nini.jpg"
+
+      img.onload = function () {
+        canvas.width = img.width
+        canvas.height = img.height
+
+        offCanvas.width = img.width
+        offCanvas.height = img.height
+
+        // 计算缩放比例
+        scale = offCanvas.width / canvas.width
+
+        // 初识状态下, 两个canvas均绘制Image
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+        offCtx.drawImage(img, 0, 0, canvas.width, canvas.height)
+
+      }
+
+      // 鼠标按下
+      canvas.onmousedown = function (event) {
+        event.preventDefault() // 禁用默认事件
+        var point = windowToCanvas(event.clientX, event.clientY) // 获取鼠标相对于 canvas 标签的坐标
+        isMouseDown = true
+        drawCanvasWithMagnifier(true, point) // 绘制在离屏canvas上绘制放大后的图像
+      }
+
+      // 鼠标移动
+      canvas.onmousemove = function (event) {
+        event.preventDefault() // 禁用默认事件
+        if (isMouseDown === true) {
+          var point = windowToCanvas(event.clientX, event.clientY)
+          drawCanvasWithMagnifier(true, point)
+        }
+      }
+
+      // 鼠标松开
+      canvas.onmouseup = function (event) {
+        event.preventDefault() // 禁用默认事件
+        isMouseDown = false
+        drawCanvasWithMagnifier(false) // 不绘制离屏放大镜
+      }
+
+      // 鼠标移出canvas标签
+      canvas.onmouseout = function (event) {
+        event.preventDefault() // 禁用默认事件
+        isMouseDown = false
+        drawCanvasWithMagnifier(false) // 不绘制离屏放大镜
+      }
+    }
+
+    /**
+    * 返回鼠标相对于canvas左上角的坐标
+    * @param {Number} x 鼠标的屏幕坐标x
+    * @param {Number} y 鼠标的屏幕坐标y
+    */
+    function windowToCanvas(x, y) {
+      var bbox = canvas.getBoundingClientRect() // bbox中存储的是canvas相对于屏幕的坐标
+      return {
+        x: x - bbox.x,
+        y: y - bbox.y
+      }
+    }
+
+    function drawCanvasWithMagnifier(isShow, point) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height) // 清空画布
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height) // 在画布上绘制图像
+
+      /* 利用离屏，绘制放大镜 */
+      if (isShow) {
+        var { x, y } = point
+
+        var mr = 50 // 正方形放大镜边长
+
+        // (sx, sy): 待放大图像的开始坐标
+        var sx = x - mr / 2,
+          sy = y - mr / 2
+
+        // (dx, dy): 已放大图像的开始坐标
+        var dx = x - mr,
+          dy = y - mr
+
+        // 将offCanvas上的(sx,sy)开始的长宽均为mr的正方形区域
+        // 放大到
+        // canvas上的(dx,dy)开始的长宽均为 2 * mr 的正方形可视区域
+        // 由此实现放大效果
+        ctx.drawImage(offCanvas, sx, sy, mr, mr, dx, dy, 2 * mr, 2 * mr)
+      }
+      /*********************/
+    }
+  </script>
+</body>
+</html>
+
+<!-- 在上述中心缩放的基础上，实现放大镜主需要注意以下 2 个部分：
+
+    细化处理canvas的鼠标响应事件：滑入、滑出、点击和松开
+    重新计算离屏坐标（详细公式计算思路请见代码注释）
+    重新计算鼠标相对于 canvas 标签的坐标（详细公式计算思路请见代码注释）
+ -->

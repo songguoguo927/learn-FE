@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>拖动-随机排布</title>
+    <style>
+      
+      div.wrap {
+        width: 300px;
+        height: 150px;
+       border: 1px solid;
+      }
+      
+      div.drag {
+        width: 100px;
+        height: 100px;
+        background: rebeccapurple;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      
+      <!-- <img src="./nini.jpg" alt="听说我默认是可拖放元素">
+            <a href="">听说我默认是可拖放元素</a> -->
+    </div>
+    <div class="drag" id="ID"></div>
+    <script>
+      var wrap = document.querySelector(".wrap");
+      var drag = document.querySelector(".drag");
+      var dom = document.querySelector("#ID");
+    
+      drag.draggable = true;
+
+      //在开始拖放时，记录拖放的元素（保存起来）；
+      //在放置的时候，获取到拖放的元素，放置到目标元素的内部（追加节点）
+      drag.ondragstart = function(e) {
+        //e -->拖放数据传输对象
+        console.log("dragstart");
+        var dt = e.dataTransfer;
+        //添加数据到数据传输对象里
+        console.log(dt);
+        dt.setData("id", this.id);
+      };
+      /*drag dragenter*/
+      wrap.ondragover = function(e) {
+        console.log("wrap -dragover");
+        e.preventDefault(); //阻止默认行为（火狐/谷歌  div不让放置的行为）
+      };
+
+      wrap.ondrop = function(e) {
+        console.log("wrap--ondrop");
+        var dt = e.dataTransfer;
+        var id = dt.getData("id");
+        this.appendChild(dom);
+      };
+      /*dragend*/
+
+    </script>
+  </body>
+</html>

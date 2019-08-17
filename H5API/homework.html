@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title> ZTREE DEMO </title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+ 
+  <link
+      rel="stylesheet"
+      href="http://www.treejs.cn/v3/css/zTreeStyle/zTreeStyle.css"
+      type="text/css"
+    />
+    <script
+      type="text/javascript"
+      src="http://www.treejs.cn/v3/js/jquery-1.4.4.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="http://www.treejs.cn/v3/js/jquery.ztree.core.js"
+    ></script>
+</head>
+<body>
+<div>
+   <ul id="treeDemo" class="ztree"></ul>
+</div>
+<script>
+        var zTreeObj;
+        // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+        var setting = {};
+        // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
+        // var zNodes = [
+        // {name:"test1", open:true, children:[
+        //    {name:"test1_1"}, {name:"test1_2"}]},
+        // {name:"test2", open:true, children:[
+        //    {name:"test2_1"}, {name:"test2_2"}]}
+        // ];
+        var data = [
+             { id: 1, name: "根编目", cate_path: null },
+             { id: 2, name: "Java课程", cate_path: "1.2" },
+             { id: 3, name: "Spring课程", cate_path: "1.2.3" },
+             { id: 6, name: "Servlet课程", cate_path: "1.2.6" },
+             { id: 4, name: "SpringBoot课程", cate_path: "1.2.3.4" },
+             { id: 5, name: "Web课程", cate_path: "1.5" },
+             { id: 7, name: "React课程", cate_path: "1.5.7" },
+             { id: 8, name: "redux课程", cate_path: "1.5.7.8" },
+             { id: 9, name: "JSX", cate_path: "1.5.7.9" },
+             { id: 10, name: "Linux", cate_path: "1.2.10" },
+             { id: 11, name: "store", cate_path: "1.5.7.8.11"},
+             { id: 12, name: "H5课程", cate_path: "1.5.12" },
+             { id: 13, name: "H5API", cate_path: "1.5.12.13" }
+
+           ];
+        function transferData(dataArr) {
+          // dataArr.shift();
+          dataArr = dataArr.filter(function(item){
+            return item.cate_path;
+          })
+          dataArr.map(function(item) {//单纯的以slice位置进行切割会有问题---随着id的自增id的位数1，2，3位不定
+            var idArr = item.cate_path.split('.');
+            var parent_id = idArr[idArr.length-2];
+            item["parent_id"]=parent_id;
+          });
+          dataArr.forEach(function(item){
+              var id = item.id;
+              item.children = [];
+              //再次遍历找孩子
+              dataArr.forEach(function(cItem) {
+                if(id==cItem.parent_id){
+                  item.children.push(cItem)
+                } 
+              })
+              if(item.children.length==0){
+                  delete item.children;
+              }
+          })
+          return dataArr.filter(function(item) {
+            return item["cate_path"].length == 3;
+          });
+        }
+        // console.log(transferData(data));  加了这一行，导致下面只渲染了web课程
+        var zNodes = transferData(data);
+        // console.log(zNodes)
+        $(document).ready(function(){
+           zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        });
+       </script>
+</body>
+</html> 

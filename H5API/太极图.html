@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    canvas{
+        animation: myTransform 3s infinite linear;
+    }
+    @keyframes myTransform {
+        0% {
+            transform: rotateZ(360deg); 
+        }
+        
+        100% {
+            transform: rotateZ(0deg);
+        }
+    }
+    </style>
+</head>
+<body>
+    <canvas width="400" height="400"></canvas>
+    <div>a</div>
+    <script>
+    var canvas = document.querySelector('canvas')
+    // canvas.style.border = "1px solid red"
+    var ctx = canvas.getContext('2d');
+    // //画两个颜色不同的 坐标x相同，半径相同的原
+    //line = true 画线
+    /**参数：坐标，半径，角度 ，颜色 ，画线否*/
+    CanvasRenderingContext2D.prototype.drawCircle= function (x,y,r,deg1,deg2,color,line){
+        this.beginPath();
+        this.arc(x,y,r,deg1,deg2,false);
+       
+        if(line){
+            this.strokeStyle = color;
+            this.stroke();
+        }else{
+            this.closePath();
+            this.fillStyle = color;
+            this.fill(); 
+        }
+    }
+    ctx.drawCircle(200,200,200,0.5*Math.PI,-0.5*Math.PI,"hsl(200,50%,50%)");
+    ctx.drawCircle(200,200,200,-0.5*Math.PI,0.5*Math.PI,"hsl(200,50%,50%)",true);
+    ctx.drawCircle(200,100,100,0,2*Math.PI,"white")
+    ctx.drawCircle(200,300,100,0,2*Math.PI,"hsl(200,50%,50%)")
+    ctx.drawCircle(200,111,33,0,2*Math.PI,"hsl(200,50%,50%)")
+    ctx.drawCircle(200,300,33,0,2*Math.PI,"white")
+    </script>
+</body>
+</html>

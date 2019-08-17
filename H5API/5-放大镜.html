@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>放大镜canvas版</title>
+    <style type="text/css">
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      #canvas {
+        display: block;
+        margin: 0 auto;
+        box-shadow: 2px 3px 10px 5px gray;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas" width="477" height="476"></canvas>
+  </body>
+  <script type="text/javascript">
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext("2d");
+    //创建图片
+    var img = new Image();
+    img.src = "./nini.jpg";
+    img.onload = function() {
+      context.drawImage(img, 0, 0);
+    };
+    //添加鼠标事件
+    
+    canvas.onmousedown = function() {
+      canvas.onmousemove = function(e) {
+        //清除画布
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        // 再次绘制图片到画布上
+        context.drawImage(img, 0, 0);
+        var event = window.event || e;
+        //光标的坐标  clientX视口区的x坐标
+        //pageX PageY 是整篇文档中的坐标  通常大于【有滚动条的情况】等于clientX
+
+        /*设置canvas.offsetLeft 的原因是以防canvas的位置被定位产生了偏移*/
+        var x = event.clientX - canvas.offsetLeft;
+        var y = event.clientY - canvas.offsetTop;
+        // 开始绘制放大区域
+        context.drawImage(
+          img,
+          x - 50,
+          y - 50,
+          100,
+          100,
+          x - 70,
+          y - 70,
+          140,
+          140
+        );//缩放比例140/100
+        // 9个参数，分别是：图像元素，
+     //被复制区域在原画布中的起始横坐标、被复制区域在原画布中的起始纵坐标、被复制区域的宽度、被复制区域的高度、
+     //复制后目标图像在画布中的起始横坐标、复制后目标图像在画布中的起始纵坐标、复制后目标图像的宽度、复制后目标图像的高度。 
+      };
+    };
+    //鼠标移出事件
+    /**/
+    canvas.onmouseleave = function() {
+      // 清除鼠标移动事件
+      canvas.onmousemove = null;
+      // 清除画布
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      // 再次绘制图片到画布上
+      context.drawImage(img, 0, 0);
+    };
+  </script>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Learn Canvas</title>
+  <style>
+    canvas {
+      display: block;
+      margin: 0 auto;
+      border: 1px solid #222;
+    }
+
+    input {
+      display: block;
+      margin: 20px auto;
+      width: 800px
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <canvas id="my-canvas"></canvas>
+    <input type="range" value="1.0" min="0.5" max="3.0" step="0.1">
+    <canvas id="watermark-canvas" style="display: none;"></canvas>
+  </div>
+  <script type="text/javascript">
+    window.onload = function () {
+      var canvas = document.querySelector("#my-canvas")
+      var watermarkCanvas = document.querySelector("#watermark-canvas")
+      var slider = document.querySelector("input")
+
+      var scale = slider.value
+
+      var ctx = canvas.getContext('2d')
+      var watermarkCtx = watermarkCanvas.getContext("2d")
+
+      /* 给第二个canvas获取的Context对象添加水印 */
+      watermarkCanvas.width = 300
+      watermarkCanvas.height = 100
+      watermarkCtx.font = "bold 20px Arial"
+      watermarkCtx.lineWidth = "1"
+      watermarkCtx.fillStyle = "rgba(255 , 255 , 255, 0.5)"
+      watermarkCtx.fillText("=== xiajm.me ===", 50, 50)
+      /****************************************/
+
+      var img = new Image()
+      img.src = "./nini.jpg"
+
+      /* 加载图片后执行操作 */
+      img.onload = function () {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        drawImageByScale(canvas, ctx, img, scale, watermarkCanvas);
+        // 监听input标签的mousemove事件
+        // 注意：mousemove实时监听值的变化，内存消耗较大
+        slider.onmousemove = function () {
+          scale = slider.value
+          drawImageByScale(canvas, ctx, img, scale, watermarkCanvas);
+        }
+      }
+      /******************/
+    }
+    /**
+    *
+    * @param {Object} canvas 画布对象
+    * @param {Object} ctx
+    * @param {Object} img
+    * @param {Number} scale 缩放比例
+    * @param {Object} watermark 水印对象
+    */
+   
+    function drawImageByScale(canvas, ctx, img, scale, watermark) {
+      // 图像按照比例进行缩放
+      var width = img.width * scale,
+        height = img.height * scale
+      // (dx, dy): 画布上绘制img的起始坐标
+      var dx = canvas.width / 2 - width / 2,
+        dy = canvas.height / 2 - height / 2
+      ctx.clearRect(0, 0, canvas.width, canvas.height) // No1 清空画布
+      ctx.drawImage(img, dx, dy, width, height) // No2 重新绘制图像
+      if (watermark) {
+        // No3 判断是否有水印: 有, 绘制水印
+        ctx.drawImage(watermark, canvas.width - watermark.width, canvas.height - watermark.height)
+      }
+    }
+  </script>
+</body>
+</html>
+<!-- 
+
+    利用canvas除了可以实现滤镜，还可以利用离屏技术放大镜功能。
+
+为了方便讲解，本文分为 2 个应用部分：
+    实现水印和中心缩放
+    实现放大镜
+
+1. 什么是离屏技术？
+
+canvas 学习和滤镜实现介绍过drawImage接口。除了绘制图像，
+这个接口还可以：将一个canvas对象绘制到另一个canvas对象上。这就是离屏技术。
+2. 实现水印和中心缩放
+
+在代码中，有两个 canvas 标签。分别是可见与不可见。不可见的 canvas 对象上的 Context 对象，就是我们放置图像水印的地方。 -->

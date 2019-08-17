@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>indexDB数据库</title>
+    <script>
+        //test environment
+    window.onload = function () {
+        var btns = document.querySelectorAll('button');
+        //创建对象仓库
+        btns[0].onclick = function(){
+            var request = indexedDB.open('user','1.0');
+            request.onsuccess=function(e){
+                console.log('数据库连接成功，如果没有就创建成功');
+                //获取数据库对象 以下三种方式相同
+                console.log(this.result)
+                // console.log(request.result)
+                // console.log(e.target.result)
+                //可以在这里获取事务对象，获取对象仓库，增删查改
+            }
+            //版本更新触发事件  在这创建/删除对象仓库
+            request.onupgradeneeded = function(){
+                console.log('版本更新')
+                var db = this.result;
+                //创建对象仓库
+                //先去判断有没有，有先删除，再去创建
+                if(db.objectStoreNames.contains('Student')){
+                    db.deleteObjectStore("Student"); //删除对象仓库
+                }
+                db.createObjectStore('Student',{
+                    keyPath:'id',
+                    autoIncrement:true
+                });
+                console.log('Student 对象仓库已创建')
+            }
+        }
+        //获取对象仓库
+
+        btns[1].onclick = function(){
+            //获取数据库对象
+            var request = indexedDB.open('user');
+            request.onsuccess = function(){
+                var db = this.result;
+                //通过数据库对象获取事务对象
+               var ts = db.transaction('Student','readwrite');
+            //    var ts = db.transaction(['Student'],'readwrite'); //放多个用数组
+
+            //通过事务对象去获取对象仓库
+            store = ts.objectStore('Student');
+            console.log(store);
+            }
+        }
+        //添加-put/add  修改 put数据
+        btns[2].onclick =function(){
+             //获取数据库对象
+             var request = indexedDB.open('user');
+            request.onsuccess = function(){
+                var db = this.result;
+                //通过数据库对象获取事务对象
+               var ts = db.transaction('Student','readwrite');
+            //    var ts = db.transaction(['Student'],'readwrite'); //放多个用数组
+
+            //通过事务对象去获取对象仓库
+            var store = ts.objectStore('Student');
+            console.log(store);
+            var req = store.put({ //用来添加/刷新   如果key值一样会进行刷新
+                name:'lisi',
+                age:12
+            })
+            // var req = store.add({ //用来添加  如果key值一样会报错
+            //     name:'lisi',
+            //     age:12
+            // })
+            req.onsuccess =function(){
+                console.log('添加成功')
+            }
+            req.onerror =function(){
+                console.log('添加失败')
+            }
+            }
+            
+        }
+        //查询数据
+        btns[3].onclick =function(){
+             //获取数据库对象
+             var request = indexedDB.open('user');
+            request.onsuccess = function(){
+                var db = this.result;
+                //通过数据库对象获取事务对象
+               var ts = db.transaction('Student','readwrite');
+            //    var ts = db.transaction(['Student'],'readwrite'); //放多个用数组
+
+            //通过事务对象去获取对象仓库
+            store = ts.objectStore('Student');
+            console.log(store);
+            var req = store.getAll()
+            
+            req.onsuccess =function(){
+                console.log('查找成功',this.result)
+            }
+            req.onerror =function(){
+                console.log('查找失败')
+            }
+            }
+            
+        }
+      }
+    </script>
+</head>
+<body>
+ 
+    <button>创建对象仓库 4</button>
+    <button>获取【对象仓库-对象存储-数据仓库】--一个东西 5</button>
+    <button>添加/修改数据 1</button>
+    <button>查询数据 1</button>
+    <button>删除数据 1</button>
+    <button>删除对象仓库 1</button>
+</body>
+</html>

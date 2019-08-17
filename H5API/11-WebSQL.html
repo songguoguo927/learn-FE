@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>WebSQL数据库</title>
+    <script>
+      // 测试环境：谷歌浏览器
+      // var btns = document.querySelectorAll("button");
+      window.onload = function() {
+        var btns = document.getElementsByTagName("button");
+        // 创建数据库
+        btns[0].onclick = function() {
+          alert("1");
+          var db = openDatabase("mydb", 1.0, "Test DB", 2 * 1024 * 1024);
+          console.log("数据库", db);
+        };
+        // 创建表
+        btns[1].onclick = function() {
+          var db = openDatabase("user", "1.0", "first DB", 2 * 1024 * 1024);
+          //版本为字符串类型
+          db.transaction(function(ts) {
+            var sql = "create table student(id integer,name text,age integer)";
+            ts.executeSql(
+              sql,
+              [],
+              function(ts, result) {
+                console.log("创建表成功", result);
+              },
+              function(ts, error) {
+                console.log("创建表失败", error);
+              }
+            );
+          });
+        };
+        // 添加数据
+        btns[2].onclick = function() {
+          var db = openDatabase("user", "1.0", "first DB", 2 * 1024 * 1024);
+          db.transaction(function(ts) {
+            // ts-事务对象 注意数据顺序与创建表的字段的顺序保持一致。
+            var sql = "insert into student values(1001,'zhangsan',12)";
+            ts.executeSql(
+              sql,
+              [],
+              function(ts, result) {
+                console.log("插入数据成功", result);
+              },
+              function(ts, error) {
+                console.log("插入数据失败", error);
+              }
+            );
+          });
+        };
+        // 修改数据
+        btns[3].onclick = function() {
+          //获取db
+          var db = openDatabase("user", "1.0", "first DB", 2 * 1024 * 1024);
+          db.transaction(function(ts) {
+            // var sql = 'update student set name=?';
+            //修改rowid为？的name为？
+            var sql = "update student set name=? where rowid=?";
+            //如果进行字符串拼接的形式写的变量，建议在使用之前打印处理看看是不是我们需要的sql语句
+            ts.executeSql(
+              sql,
+              ["lisi", 1],
+              function(ts, result) {
+                console.log("修改成功", result);
+              },
+              function(ts, error) {
+                console.log("修改失败", error);
+              }
+            );
+          });
+        };
+        //查询数据
+        btns[4].onclick = function() {
+          var sql = "select * from student";
+          myExe(
+            sql,
+            [],
+            function(result) {
+              console.log("查询成功", result.rows);
+              console.log(Array.from(result.rows));
+            },
+            function(error) {
+              console.log("查询失败", error);
+            }
+          );
+        };
+        // 删除数据
+        btns[5].onclick = function() {
+          var sql = "delete from student";
+          myExe(
+            sql,
+            [],
+            function(result) {
+              console.log("删除成功", result);
+            },
+            function(err) {
+              console.log("删除失败", err);
+            }
+          );
+        };
+
+        btns[6].onclick = function() {
+          var sql = "drop table student";
+          myExe(
+            sql,
+            [],
+            function(result) {
+              console.log("删除表成功", result);
+            },
+            function(err) {
+              console.log("删除表失败", err);
+            }
+          );
+        };
+        // 封装websql  获取事务对象
+        function myExe(sql, arr, fn1, fn2) {
+          var db = openDatabase("user", "1.0", "first DB", 2 * 1024 * 1024);
+          db.transaction(function(ts) {
+            ts.executeSql(
+              sql,
+              arr,
+              function(ts, result) {
+                fn1(result);
+              },
+              function(ts, error) {
+                fn2(error);
+              }
+            );
+          });
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <button>创建数据库</button>
+    <button>创建表</button>
+    <button>添加数据</button>
+    <button>修改数据</button>
+    <button>查询数据</button>
+    <button>删除数据</button>
+    <button>删除表</button>
+  </body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>test</title>
+    <style>
+      div.box {
+        width: 100px;
+        height: 100px;
+        text-align: center;
+        color: white;
+        display: inline-block;
+      }
+      div.box span {
+        line-height: 100px;
+        font-size: 2rem;
+      }
+      .box:hover {
+        opacity: 0.5;
+        /* transform 单个设置会覆盖，想要多个效果就往后叠加 */
+        transform: translateX(100px) scale(1.2);
+        transition: opacity 2s;
+        transition: transform 2s;
+      }
+      /*transition 属性设置元素当过渡效果，四个简写属性为：
+
+    transition-property  指定CSS属性的name，transition效果
+    transition-duration transition效果需要指定多少秒或毫秒才能完成
+    transition-timing-function  指定transition效果的转速曲线
+    transition-delay 定义transition效果开始的时候*/
+      .box1 {
+        background: hsl(100, 30%, 30%);
+      }
+      .box2 {
+        background: hsl(140, 30%, 30%);
+      }
+      .box3 {
+        background: hsl(180, 30%, 30%);
+      }
+      .box4 {
+        background: hsl(220, 30%, 30%);
+      }
+      .box5 {
+        background: hsl(260, 30%, 30%);
+      }
+      .box6 {
+        background: hsl(300, 30%, 30%);
+      }
+      form {
+        background: hsl(260, 30%, 30%);
+        opacity: 0.8;
+        width: 300px;
+        /* text-align: center; */
+        height: 400px;
+        padding-top: 20px;
+        padding-left: 20px;
+      }
+      input {
+        border: none;
+        background:hsl(260, 30%, 30%); 
+        border-bottom: 2px solid gray;
+        display: block;
+        width: 200px;
+        height: 30px;
+      }
+      label{
+        color: white;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        position: absolute;
+
+      }
+      label-p:hover label{
+        transform: translateY(-30px);
+        transition: transform 2s;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box box1" id="1"><span>1</span></div>
+    <div class="box box2" id="2"><span>2</span></div>
+    <div class="box box3" id="3"><span>3</span></div>
+    <div class="box box4" id="4"><span>4</span></div>
+    <div class="box box5" id="5"><span>5</span></div>
+    <div class="box box6" id="6"><span>6</span></div>
+
+    <form action="" autocomplete="off">
+      <div class="label-p">
+          <label for="">username</label><input type="text" name="name" />
+      </div>
+    </form>
+  </body>
+</html>

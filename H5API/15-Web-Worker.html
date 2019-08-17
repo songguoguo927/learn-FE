@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+        //和timeEnd成对出现，用于计算中间代码执行时间
+    // console.time()
+    //   var total = 0;
+    //   for (var i = 0; i < 10000000000; i++) {
+    //     total += i;
+    //   }
+    //   console.log(total);//49999999990067860000
+    //   console.timeEnd() 259258.64794921875ms  default：40866 毫秒 - 倒计时结束
+
+      console.time()
+        //使用了web worker 我们看到的效果是 不会一直打圈圈
+      var worker = new Worker('15-web.js');
+      worker.onmessage = function(e){
+          console.log(e.data)
+      }
+      worker.postMessage(10000000000);
+      console.timeEnd() //default：4 毫秒 - 倒计时结束
+    </script>
+  </body>
+</html>
