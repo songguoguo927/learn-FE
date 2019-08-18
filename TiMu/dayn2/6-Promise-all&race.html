@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>测试Promise.all和Promise.race和我封装的ajax2.0</title>
+    <script src="./jam-ajax2.0.js"></script>
+  </head>
+  <body>
+    <script>
+      var baseUrl =
+        "https://hq.tigerbrokers.com/fundamental/finance_calendar/getType/";
+      var url = "2017-02-26/2017-06-10";
+      var url1 = "2017-03-26/2017-06-10";
+      //   requireData({
+      //     url: baseUrl + url
+      //   })
+      //     .then(function(res) {
+      //       console.log(JSON.parse(res).items);
+      //     })
+      //     .catch(function(e) {
+      //       console.log(e);
+      //     });
+      function renderAll() {//状态都变成resolved才会去调用then方法
+        return Promise.all([
+          requireData({ url: baseUrl + url }),
+          requireData({ url: baseUrl + url1 })
+        ]);
+      }
+      renderAll().then(function(value) {
+        console.log(value);
+      });
+      function renderRace() {//只要有一个
+        return Promise.race([
+          requireData({ url: baseUrl + url }),
+          requireData({ url: baseUrl + url1 })
+        ]);
+      }
+      renderRace().then(function(value) {
+        console.log(value);
+      });
+    </script>
+  </body>
+</html>

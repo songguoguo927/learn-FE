@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body,
+      #app {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+      #header,
+      #footer {
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        background: #555;
+        color: #fff;
+      }
+      #side {
+        width: 200px;
+        background: #eee;
+      }
+      /* css here 布局方案1-float配合calc */
+      /* #side { float: left;
+        height: calc(100% - 100px); /*注意运算符合要用空格隔开*/
+      /* }
+      #main {
+        height: calc(100% - 100px);
+      } */
+      /*布局方案2-position*/
+      /* #app {
+        position: relative;
+      }
+      #side {
+        position: absolute;
+        top: 50px;
+        left: 0;
+        bottom: 50px;
+      }
+      #main {
+        position: absolute;
+        left: 200px;
+        top: 50px;
+        right: 0;
+        bottom: 50px;
+      }
+      #footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+      } */
+      /*布局方案3-flex*/
+      /* #app {
+        display: flex;
+        flex-wrap: wrap;在容器里一行放不下，则换行
+      #header {
+        flex-basis: 100%;最小占据主轴上的空间
+      }
+      #side {
+        height: calc(100% - 100px);
+      }
+      #main {
+        height: calc(100% - 100px);
+        flex: 1;
+      }
+      #footer {
+        flex-basis: 100%;  最小占据主轴上的空间
+      } */
+      /*布局方案4-grid*/
+      #app {
+        display: grid;
+        grid-template-columns: 200px auto;
+        grid-template-rows: 50px auto 50px;
+        grid-template-areas:
+          "header header"
+          "side main"
+          "footer footer";
+      }
+      #header {
+        grid-area: header;
+      }
+      #footer {
+        grid-area: footer;
+      }
+      /*样式*/
+      /* 去掉 · */
+      #main ul {
+        list-style: none;
+      }
+
+      /* 水平排列 */
+      #main ul li {
+        display: inline-block;
+      }
+
+      /* 伪类选择器 + 伪类元素选择器 */
+      #main ul li:nth-of-type(2n)::after {
+        content: "|";
+      }
+      /*注意：`nth-child` 指的是父级元素所有的子元素包括 `<br>`，但是 `li:nth-of-type` 特指这种 `li` 元素。*/
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <header id="header">header</header>
+      <aside id="side">side</aside>
+      <div id="main">
+        <ul>
+          <li><a href="https://www.bilibili.com/1">Link1</a></li>
+          <li><a href="https://www.bilibili.com/1">Link2</a></li>
+          <li><a href="https://www.bilibili.com/1">Link3</a></li>
+          <br />
+          <li><a href="https://www.bilibili.com/1">Link4</a></li>
+          <li><a href="https://www.bilibili.com/1">Link5</a></li>
+        </ul>
+      </div>
+      <footer id="footer">footer</footer>
+    </div>
+    <script>
+      // JS here 点击列表项不跳转，弹出href内的内容。
+      var as = document.querySelectorAll("a");
+      as.forEach(function(item) {
+        item.onclick = function(e) {
+          e.preventDefault();
+          alert(e.target.href);
+        };
+      });
+      //方案2
+      //   document.querySelectorAll("ul")[0].addEventListener("click", event => {
+      //     if (event.target.tagName === "A") {
+      //       event.preventDefault();
+      //       alert(event.target.getAttribute("href"));
+      //     }
+      //   });
+    </script>
+  </body>
+</html>
+<!-- 
+  总结：学习到：
+  1，float结合calc布局
+  2，position 绝对定位布局
+  3，flex 伸缩盒布局
+  4，grid 栅格布局
+  5，伪类选择器 + 伪类元素选择器 nth-child和nth-of-type(2n)区别
+  6，去掉li默认样式，inline-block排布
+  7，阻止默认事件，事件绑定，DOM节点可直接`点`访问href属性
+ -->

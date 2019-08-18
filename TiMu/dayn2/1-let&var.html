@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>测试 关于var和let的循环</title>
+</head>
+<body>
+    <button>click me</button>
+    <button>click me</button>
+    <button>click me</button>
+    <button>click me</button>
+    <button>click me</button>
+    <button>click me</button>
+</body>
+<script>
+    var button = document.querySelectorAll('button');
+
+    // for(var i = 0; i < button.length; i++) {
+    //     button[i].onclick = e => console.log('点击了第 ' + i + '个按钮');
+    //不论点击哪个按钮，出现的结果都是 *点击了第 6个按钮
+    //因为 `for` 循环只是给 `button` 绑定了事件，但是里面的函数代码并不会执行啊，这个执行是在你点击的时候才执行的。而此时i已经是6了，所以所有的打印出来都是6。
+    // }
+    /**
+     * 解决方案 
+     * 1，将var改成let--so easy  不敲了这里
+     * 2，将for循环改成forEach循环
+     * 3，使用闭包-
+    */
+   //2，
+    // button.forEach((item,index) =>{
+    //     item.onclick = e => console.log('点击了第 ' + index + '个按钮')
+    // })
+    //3，
+    for(var i = 0; i < button.length; i++) {
+        (function(j) {
+            button[j].onclick = 
+            e => console.log('点击了第 ' + j + '个按钮');
+        })(i);
+    }
+
+</script>
+</html>

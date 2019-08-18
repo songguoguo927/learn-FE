@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>事件机制</title>
+    <style>
+      .div1 {
+        height: 100px;
+        border: 1px solid red;
+      }
+      .div2 {
+        height: 50px;
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="div1">
+      div1
+      <div class="div2">div2</div>
+    </div>
+    <script>
+      var div1 = document.querySelector(".div1");
+      var div2 = document.querySelector(".div2");
+      //DOM2级事件机制是先捕获，再进行冒泡
+      //第三个参数默认不加为false-- 表示在事件冒泡阶段调用事件处理程序;true 表示在事件捕获阶段调用事件处理程序
+      /* div1.addEventListener('click',function(){
+        console.log("div1")
+    })
+    div2.addEventListener('click',function(){
+        console.log("div2")
+    })*/
+      /* div1.addEventListener('click',function(){
+        console.log("div1")
+    })
+    div2.addEventListener('click',function(){
+        console.log("div2")
+    },true)*/
+      //同种类型的事件才会冒出去
+      //点击div1后打印出 div1
+      //---div2 ------- div2 div1
+
+      /*div1.addEventListener('click',function(){
+        console.log("div1")
+    },true)
+    div2.addEventListener('click',function(){
+        console.log("div2")
+    },true)*/
+      div1.addEventListener(
+        "click",
+        () => {
+          console.log("div1");
+        },
+        true
+      );
+      div2.addEventListener("click", () => {
+        console.log("div2");
+      });
+      //点击div1后打印出 div1
+      //---div2 ------- div1 div2
+    </script>
+  </body>
+</html>
