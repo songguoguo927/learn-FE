@@ -50,26 +50,6 @@ setInterval(function () {
     throttle(showTime);
 }, 2000);
 
-/*浏览器架构
-
-    用户界面
-    主进程
-    内核
-        渲染引擎
-        JS 引擎
-            执行栈
-        事件触发线程
-            消息队列
-                微任务
-                宏任务
-        网络异步线程
-        定时器线程
-*/
-/*浏览器下事件循环(Event Loop)
-事件循环是指: 执行一个宏任务，然后执行清空微任务列表，循环再执行宏任务，再清微任务列表
-
-微任务 microtask(jobs): promise / ajax / ~~Object.observe~~(该方法已废弃)
-宏任务 macrotask(task): setTimout / setInterval / script / IO / UI Rendering*/
 
 /*
 从输入 url 到展示的过程
