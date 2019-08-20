@@ -30,14 +30,7 @@ var b = 10;
   console.log(b); //[Function: b]非匿名自执行函数，函数名只读
 })();
 
-var a = 10;
-(function() {
-  console.log(a); //undefined
-  a = 5;
-  // console.log(window.a)//10
-  var a = 20;
-  console.log(a); //20
-})();
+
 var obj = {
   a: {
     b: {
@@ -61,6 +54,8 @@ console.timeEnd(); //default:0.763ms  0.684
 // 随机生成一个长度为 10 的整数类型的数组，例如 [2, 10, 3, 4, 5, 11, 10, 11, 20]，
 // 将其排列成一个新数组，要求新数组形式如下，例如 [[2, 3, 4, 5], [10, 11], [20]]。
 // 得到一个两数之间的随机整数，包括两个数在内
+
+/*复杂的生成长度为10的数组  方法
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -73,14 +68,25 @@ while (i > 0) {
   array.push(getRandomIntInclusive(1,30));
   i--;
 }
-console.log(array)
-
-
-
-const arrmm = Array.from({
+console.log(array)*/
+const array = Array.from({
     length: 10
   }, () => ~~(Math.random() * 50)) //创建数据
-  .sort((a, b) => a - b), //排序
-  arrnn = [...new Set(arrmm.map(i => ~~(i / 10)))] //划分区域
-  .map(i => arrmm.filter(a => ~~(a / 10) === i)) //数据划分
-console.log(arrnn)
+  .sort((a, b) => a - b); //排序
+console.log(array)//[ 13, 17, 20, 27, 29, 34, 40, 42, 43, 45 ]
+
+console.log(array.map(i => ~~(i / 10)))//[ 1, 1, 2, 2, 2, 3, 4, 4, 4, 4 ]
+console.log([0,1,2,3,4].map(i=>array.filter(a => ~~(a / 10) === i)))
+//[ [], [ 13, 17 ], [ 20, 27, 29 ], [ 34 ], [ 40, 42, 43, 45 ] ]
+
+const arrayRes = [...new Set(array.map(i => ~~(i / 10)))] //划分区域 并去重
+  .map(i => array.filter(a => ~~(a / 10) === i)) //数据划分 往每个区域放置数组
+console.log(arrayRes)//[ [ 13, 17 ], [ 20, 27, 29 ], [ 34 ], [ 40, 42, 43, 45 ] ]
+//~~常用来取整,使用~~来代替Math.floor();
+// const array = Array.from({
+//   length: 10
+// }, () =>Math.floor((Math.random() * 50))) //创建数据
+// .sort((a, b) => a - b), //排序
+// arrayRes = [...new Set(array.map(i =>Math.floor( i / 10)))] //去重及  划分区域
+// .map(i => array.filter(a => Math.floor((a / 10)) === i)) //数据划分
+// console.log(arrayRes)

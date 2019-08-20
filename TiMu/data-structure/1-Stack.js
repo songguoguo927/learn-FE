@@ -38,11 +38,11 @@ class Stack{
  * 1，进制转换；2，括号匹配；3，回文检测ntn 12345654321
 */
 /**
- * 
+ * 十进制转其他进制
  * @param {要进行转换的数，10进制的数，//2进制的数，8进制的数，16进制的数} num 
  * @param {转换规则，取值有2，8，16，10} rule  
  */
-function myParseInt(num,rule){
+function transfer(num,rule){
   let s = new Stack();
   do{
     s.push(num%rule);
@@ -54,7 +54,7 @@ function myParseInt(num,rule){
   }
   return converted;
 }
-console.log(myParseInt(10,16))
+console.log(transfer(10,16))
 
 function isOk(str){
   let s = new Stack();
