@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>一眼就能看懂的防抖和节流动画-还能学一点canvas</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+      }
+      body {
+        display: flex;
+      }
+      #box {
+        margin: auto;
+      }
+      .tips {
+        text-align: center;
+        margin: 10px 0;
+        font-size: 18px;
+        /* font-weight: 600; */
+      }
+      input {
+        outline-color: red;
+        margin-top: 10px;
+        height: 30px;
+        width: 100%;
+        font-size: 18px;
+        padding: 0 5px;
+        box-sizing: border-box;
+      }
+      canvas {
+        border: 2px solid red;
+        display: block;
+      }
+
+      #footer {
+        position: fixed;
+        bottom: 0;
+        height: 32px;
+        width: 100%;
+        text-align: center;
+        color: #999;
+        font-size: 12px;
+        /* background: red; */
+      }
+
+      #footer a {
+        color: #999;
+      }
+
+      #footer a:visited {
+        font-size: 12px;
+        color: #888;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box">
+      <p class="tips">
+        请将鼠标移入<b>canvas</b>画布中, 或<b>input</b>框输入内容,
+        亦或者<b>改变窗体大小</b>;
+      </p>
+      <canvas width="1200" height="300"></canvas>
+      <input type="text" placeholder="请输入内容" />
+     
+    </div>
+    <script>
+      //使用原型的方式编写canvas
+
+      const Canvas = function(canvas) {
+        const { round } = Math;
+        this.canvas = canvas || document.createElement("canvas");
+        this.ctx = this.canvas.getContext("2d");
+
+        this.font_weight_width = 0;
+        this.row_height = round(this.canvas.height / 3);
+
+        //渲染页面的数据
+        this.data = {
+          option: {
+            width: 2,
+            height: 0.8,
+            interval: 3
+          },
+          lists: {
+            common_array_data: {
+              desc: "普通 common",
+              list: []
+            },
+            debounce_array_data: {
+              desc: "防抖 debounce",
+              list: []
+            },
+            throttle_array_data: {
+              desc: "节流 throttle",
+              list: []
+            }
+          }
+        };
+      };
+      //    绘制左边文字部分
+      Canvas.prototype.draw_text = function() {
+        const ctx = this.ctx;
+        const { width, height } = this.canvas; // 获取 canvas 宽高
+        // 通过计算文本宽度，找到最长的确定为左边文本区域的宽度
+        const _set_text_content_width = (text, x = 10) => {
+          const { round } = Math;
+          // 文本两边加上X间距
+          const font_width = round(ctx.measureText(text).width + x * 2);
+          if (!this.font_content_width) {
+            this.font_content_width = font_width;
+            return;
+          }
+          if (this.font_content_width < font_width) {
+            this.font_content_width = font_width;
+          }
+        };
+        // 设置字体
+        ctx.font = "16px Arial";
+        // 绘制左边标题文字
+        Object.keys(this.data.lists).forEach((key, index) => {
+          // 获取文本
+          const text = this.data.lists[key].desc;
+          // 统计宽度
+          _set_text_content_width(text, 10);
+          // 计算文本顶部
+          const top = this.row_height * (index + 0.5);
+          // 绘制文字
+          ctx.fillText(text, 10, top);
+        });
+      };
+      //绘制小方块
+      Canvas.prototype.fillRect = function() {
+        const ctx = this.ctx;
+        const { min } = Math;
+        ctx.fillStyle = "#999"; // 填充的颜色
+        let line_length_arr = []; // 存储三个已经绘制的长度
+        // 遍历数据
+        Object.keys(this.data.lists).forEach((key, index) => {
+          // 获取方法的数据
+          const { desc, list } = this.data.lists[key];
+          // 每个方法存储的数据
+          list.forEach((v, i) => {
+            // 获取每个方块的配置属性
+            const { width = 2, height = 0.8, interval = 2 } = this.data.option;
+            // 计算每个方块X坐标  x = 左边文字标题区域 + (方块宽+间隙) * 索引(几个)
+            const x = this.font_content_width + i * (width + interval);
+            // 计算每个方块的Y坐标 y =每行高度 * ( 剩余百分百对半 + 索引(外循环) )
+            const y = this.row_height * ((1 - height) / 2 + index);
+            // 如果数组值不为0 则绘制正方形
+            if (v) {
+              ctx.fillRect(x, y, width, this.row_height * height);
+            }
+            // 把最后一个正方形的数据收集起来
+            if (i === list.length - 1) {
+              line_length_arr.push(x + width + interval);
+            }
+          });
+        });
+        // 如果没有数据需要默认为空数组；
+        line_length_arr = line_length_arr.length ? line_length_arr : [0];
+        // 取出最短的值
+        const min_line_length = min(...line_length_arr);
+        // 判断最短的是否超出右边渲染区域
+        if (min_line_length > this.canvas.width) {
+          // 擦除右边区域
+          ctx.clearRect(
+            this.font_content_width,
+            0,
+            Number.MAX_SAFE_INTEGER,
+            Number.MAX_SAFE_INTEGER
+          );
+          const lists = this.data.lists;
+          Object.keys(lists).forEach(key => (lists[key].list = []));
+        }
+      };
+
+      //   实现canvas动画init
+      Canvas.prototype.init = function() {
+        this.draw_text();
+        const _start = () => {
+          this.fillRect();
+          // console.log('运行中...')
+          window.requestAnimationFrame(_start);
+        };
+        window.requestAnimationFrame(_start);
+      };
+      //函数防抖(debounce)
+      //当持续触发事件时，一定时间段内没有再触发事件，事件处理函数才会执行一次; 
+      //如果设定的时间到来之前，又一次触发了事件，就重新开始延时;
+      const debounce = (fn, t) => {
+        let time;// 创建一个标记用来存放定时器的返回值
+        return function(...arg) {
+          clearTimeout(time);// 每当用户输入的时候把前一个 setTimeout clear 掉
+          let that = this;
+ // 然后又创建一个新的 setTimeout, 这样就能保证输入字符后的 interval 间隔内如果还有字符输入的话，就不会执行 fn 函数
+
+          time = setTimeout(function(...arg) {
+            fn.apply(that, arg);
+          }, t);
+        };
+      };
+      //函数节流(throttle) 当持续触发事件时，保证一定时间段内只调用一次事件处理函数;
+      const throttle = (fn, t) => {
+        let now = Date.now();
+        return function(...arg) {
+          if (Date.now() - now > t) {
+            fn.apply(this, arg);
+            now = Date.now();
+          }
+        };
+      };
+      const example_fn = (time = 300, living, log = false) => {
+        const debounce_fn = debounce(() => {
+          log && console.error("防抖");
+          living.data.lists.debounce_array_data.list.push(1);
+        }, time);
+        const throttle_fu = throttle(() => {
+          log && console.warn("节流");
+          living.data.lists.throttle_array_data.list.push(1);
+        }, time);
+        return function() {
+          log && console.log("普通");
+          living.data.lists.common_array_data.list.push(1);
+          throttle_fu();
+          living.data.lists.throttle_array_data.list.push(0);
+          debounce_fn();
+          living.data.lists.debounce_array_data.list.push(0);
+        };
+      };
+      let C = new Canvas(document.querySelector("canvas"));
+      C.init();
+      const fn = example_fn(300, C, false);
+
+      document.querySelector("input").addEventListener("input", fn);
+      document.querySelector("canvas").addEventListener("mousemove", fn);
+      window.addEventListener("resize", fn);
+    </script>
+  </body>
+</html>
+<!-- 总结
+函数防抖：触发高频事件后n秒内函数只会执行一次，如果n秒内高频事件再次被触发，则重新计算时间
+将几次操作合并为一次操作进行。
+
+  思路：
+
+    每次触发事件时都取消之前的延时调用方法
+原理是维护一个计时器，规定在delay时间后触发函数，但是在delay时间内再次触发的话，就会取消之前的计时器而重新设置。这样一来，只有最后一次操作能被触发。
+
+函数节流：高频事件触发，但在n秒内只会执行一次，所以节流会稀释函数的执行频率
+使得一定时间内只触发一次函数。
+原理是通过判断是否到达一定时间来触发函数。
+ -->

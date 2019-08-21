@@ -51,7 +51,7 @@ var new_array = arr.map(function callback(currentValue[,index[, array]]) {
 ```
 
 
-## parseInt
+## parseInt--其他进制转十进制
 再来讲一下什么parseInt，先讲的官方一点，随后有我的通俗OS：【因为有时候官方虽然解释的好，但不一定易懂，反正我是第一遍看的时候是一脸黑人问号】
 
 官方：
@@ -108,7 +108,7 @@ console.log(['10','10','10','10','10'].map(parseInt))
 ['1','2','3'].map(n=>parseInt(n))// [1, 2, 3]
 ```
 
-## toString
+## toString--10进制转其他进制
 讲完了其他进制转10进制，那如果我们想要将10进制的数转成其他进制该如何实现？
 
 噔噔噔噔，这个时候toString就闪亮登场啦，可能我们平时用的最多的时候不带参数，但是当它带了参数，顿时闪闪发光，牛啊toString
