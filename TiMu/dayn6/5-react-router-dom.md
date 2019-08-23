@@ -377,7 +377,7 @@ ReactDOM.render(
 问题背景：当路由发生跳转时我们可能需要携带一些参数。
 
 解决方法：使用 props 属性，介绍以下三种传值方法：
-（1）props.params
+（1）props.params 动态路由传参，在后面参数不固定时建议使用
 （2）query
 （3）state
 分别介绍下自己
@@ -393,7 +393,7 @@ ReactDOM.render(
 this.props.history.push("/user/sam");
 ```
 
-在 UserPage 页面中通过 this.props.params.name 获取值。
+在 UserPage 页面中通过 `this.props.match.params.name` 获取值。
 
 上面的方法可以传递一个或多个值，但是每个值的类型都是字符串，没法传递一个对象。如果要传的话可以将 json 对象转换为字符串，传递过去之后再将 json 字符串转换为对象。
 
