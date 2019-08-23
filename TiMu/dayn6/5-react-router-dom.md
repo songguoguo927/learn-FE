@@ -381,8 +381,7 @@ ReactDOM.render(
 （2）query
 （3）state
 分别介绍下自己
-
-（1）props.params
+### （1）props.params
 
 指定一个 path ，然后指定通配符可以携带参数到指定的 path ：`<Route path='/user/:name' component={UserPage}></Route>`
 跳转 UserPage 页面时，可以这样写：
@@ -390,7 +389,6 @@ ReactDOM.render(
 ```js
 //link方法
 <Link to="/user/sam">用户</Link>;
-//或me?
 //push方法
 this.props.history.push("/user/sam");
 ```
@@ -407,8 +405,7 @@ let path = "/user/${data}";
 //在页面中获取值时
 let data = JSON.parse(this.props.params.data);
 ```
-
-（2）query
+### （2）query
 
 query 方式可以传递任意类型的值，但是页面的 url 也是由 query 的值拼接的，url 很长且是明文传输。
 
@@ -431,8 +428,7 @@ this.props.history.push(path);
 let data = this.props.location.query;
 let {id,name,age} = data;
 ```
-
-（3）state
+### （3）state
 
 state 方式类似于 post，依然可以传递任意类型的数据，而且可以不以明文方式传输。
 
@@ -560,7 +556,7 @@ app.listen(port, function() {
 });
 ```
 
-一个 Koa 应用的配置示例：
+#### 一个 Koa 应用的配置示例：
 
 ```js
 import Koa from "koa";
@@ -625,8 +621,9 @@ server {
 > 其本质的原理就是利用服务端将任何请求都指向 index.html，而在 React 应用中 index.html 又刚好通过 React-Router 配置了相应的路由，我们让服务器返回 index.html，后面就交给前端路由来实现无刷新加载对应页面。
 
 ==本质的原理就是利用服务端将任何请求都指向 index.html==
-
+[所有使用html5 pushState的应用都有这个问题](https://stackoverflow.com/questions/41246261/react-routing-is-able-to-handle-different-url-path-but-tomcat-returns-404-not-av/41249464#41249464)
 ### 补充 apache
+处理此问题的一种方法是将404错误配置为转发到/test/index.html。这可能是默认配置webpack dev服务器的方式。
 
 问题原因
 
@@ -638,13 +635,19 @@ server {
 
 2：打开 httpd.conf
 
-3：找到#LoadModule rewrite_module modules/mod_rewrite.so 然后把前面的#去掉
+3：找到#LoadModule rewrite_module modules/mod_rewrite.so 然后把前面的#去掉--开启“mod_rewrite”模块重写  mod_rewrite是Apache的一个非常强大的功能，它可以实现伪静态页面。
 
-4：找到所有的 AllowOverride 配置项，把所有的 None 都修改为 All
+>如果没有查找到，则到“LoadModule” 区域，在最后一行加入“LoadModule rewrite_module modules/mod_rewrite.so”（必选独占一行）
 
+> httpd.conf文件更改想要立即生效的话，请重启apache服务器
+4：找到==所有的== AllowOverride 配置项，把所有的 None 都修改为 All
+目的：让apache服务器支持.htaccess
+Options FollowSymLinks
+
+AllowOverride None ==》 None 都修改为 All
 5：在网站根目录下面新建一个 .htaccess 文件（不需要文件名，直接.htaccess 就可以，Windows 可以），输入以下内容
 .htaccess 这个文件，这个文件是 apache 用的分布式配置文件
-
+一个例子
 ```js
     <IfModule mod_rewrite.c>
         RewriteEngine On
@@ -655,6 +658,47 @@ server {
         RewriteRule . /index.html [L]
     </IfModule>
 ```
+自己改后:
+```js
+    <IfModule mod_rewrite.c>
+        RewriteEngine On
+        RewriteBase /jam
+        RewriteRule ^index\.html$ - [L]
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteRule . /index.html [L]
+    </IfModule>
+```
+单纯这样改的话：刷新不再报404，但是你刷新会到显示localhost下的index.html,地址栏路径是没有变的。
+所以机智的我，因为前一天晚上看了好多关于上面配置项啥意思的文章，抱着试一试踩坑的心态，又加了一行
+```js
+    <IfModule mod_rewrite.c>#如果mode_rewrite.c模块存在 则执行以下指令
+        RewriteEngine On  //重写引擎开关on为开启off为关闭
+        RewriteBase /jam //#重写范围，这里/为本地顶级目录
+        RewriteRule ^index\.html$ - [L] //重写规则，支持正则表达式的
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+        #上面两个均为重写条件，%｛｝中内容为apache定义的一系列返回参数
+        RewriteRule . /jam/index.html [L]
+    </IfModule>
+```
+果然，哈哈哈哈，开心，疼了一晚上的脑壳不疼了。
+果然，有时候卡顿了，不要急，停一会，不到20分钟搞定
+- [ ] 好哦，又可以分享一篇原创掘金了耶，周末总结
+
+
+补充：rewrite规则学习
+后面的L是结束符号，同等级的还有
+
+[L](last)：终止一系列的RewriteCond和RewriteRule  
+
+[R](redirect)：触发一个显示的跳转，也可以指定跳转类型，如[R=301]  
+
+[F](forbidden)：禁止查看特定文件，apache会触发403错误
+
+[NC](no case)：表示忽略大小写
+
+
 
 重启 apache
 
@@ -678,7 +722,7 @@ RewriteRule . index.html [L]
 解决方法：配置按需加载的步骤如下：
 （1）安装 bundle-loader。
 npm install --save-dev bundle-loader
-yarn add -D bundle-loader
+yarn add --dev bundle-loader
 （2）定义 Bundle.js。
 <Bundle> 组件会接受一个名为 load 的 props， load 是一个组件异步加载的方法，该方法需要传入一个回调函数作为参数，然后回调函数会在方法内异步接收加载完的组件，详细代码如下
 
