@@ -22,7 +22,7 @@ PUT和PATCH都是给服务器发送修改资源，有什么区别？
 
 PUT和PATCH都是更新资源，而PATCH用来对已知资源进行局部更新。
 ---
-HTTP协议原理-实践
+HTTP协议原理-实践video
 
 
 ## 经典五层模型
@@ -44,7 +44,7 @@ HTTP/0.9
     没有HEADER等描述数据的信息
     服务器发送完毕，就关闭TCP连接
 
-注意：此处连接和http请求是不一样的，在同一个TCP连接中可以发送多个http请求  http/1.1可以这样做
+注意：此处连接和http请求是不一样的，在同一个TCP连接中可以发送多个http请求-》http/1.1可以这样做
 某一个http请求一定是在一个TCP连接中进行发送的
 
 HTTP/1.0
@@ -57,8 +57,8 @@ HTTP/1.1
     1、增加持久连接--不同于HTTP/0.9 1.0的时候一个http请求完就关闭TCP连接
         有助于提升性能，因为建立一个TCP连接需要3次握手，等等操作，消耗，延迟很高
     2、pipeline
-    在同一个TCP连接中可以发送多个http请求，
-    但服务端对请求结果的处理返回是按顺序的（串行），造成一个问题，当后面的结果处理的快，还是要等待前一个慢的被处理完，这部分时间的消耗在串行/并行差异就体现出来了---http/2会对这部分进行优化
+    在同一个TCP连接中可以发送多个http请求，但是串行
+    但服务端对请求结果的处理返回也是按顺序的（串行），造成一个问题，当后面的结果处理的快，还是要等待前一个慢的被处理完，这部分时间的消耗在串行/并行差异就体现出来了---http/2会对这部分进行优化
 >HTTP2优化服务端对请求结果的处理返回，串行
     3、增加host和其他一些命令
         物理服务器上的可以同时跑多个软件服务（node服务，java服务），通过host字段判断确定到底是哪个服务；提高物理服务的使用效率
@@ -114,7 +114,7 @@ Hi
 用来定义对于资源的操作
 GET POST DELETE 。。。
 从定义上讲各自有语义
- >语义用来规范，具体操作你不想遵循语义它也不会限制你，建议遵守
+ >语义用来规范，具体操作你不想遵循语义它也不会限制你，但建议遵守
 
 ## HTTP CODE 状态码
 
@@ -165,24 +165,210 @@ application/x-www.form-urlencoded
 'Access-Control-Max-Age':'1000'
 //最长时间：多少秒之内允许跨域请求而不需要进行预请求--即直接发送正式请求
 
-## 缓存 Cache-Control
-可缓存性
-    public---->http经过的任何地方，都可以进行缓存
+## 缓存 Cache-Control  
+特性
+1、可缓存性--指定哪些地方可以进行缓存
+    public---->http请求返回的内容经过的任何地方（中间代理服务器，客户端浏览器等），都可以进行缓存
     private--->只有发起请求的这个浏览器可以进行缓存
-    no-cache-->任何一个结点都不进行缓存
-到期
-    max-age=<seconds> 设置某一部分的缓存内容多少秒之后过期，过期之后会再次发送请求给服务端请求新的内容
-    s-maxage=<seconds> 只有在代理服务器内才会生效，含义类似上面
-    max-stale=<seconds> 发起请求方主动带的请求头，代表即便缓存已经过期，只要在max-stale时间内，仍使用缓存的内容，不需要去获取新的内容，一般在浏览器用不到，
+    no-cache-->（本地可以进行缓存但要进行缓存验证）任何一个结点都不进行缓存
+2、到期--缓存到期时间
+    max-age=<seconds> 设置某一部分的缓存内容多少秒之后过期，过期之后会再次发送请求给服务端请求新的内容；过期时间之内不会再发送请求给服务器，而是直接从缓存中取资源
+    >但一般有一种情况，就是服务端的内容发生改变而因为路径没变导致仍然使用的是缓存的内容，如何及时更新到客户端呢？目前业界大多数的解决方案是在打包文件的时候，根据文件的内容生成对应的hash码，给文件名加上这一串码
 
-重新验证
+    s-maxage=<seconds> 会代替max-age，但只有在代理服务器内才会生效，含义类似上面
+    max-stale=<seconds> 在发起请求方（服务端返回内容时）主动带的请求头，代表即便缓存已经在max-age内过期，只要在max-stale时间内，仍使用过期的缓存的内容，不需要去获取新的内容，一般在浏览器用不到，浏览器使用的都是返回的内容
+
+3、重新验证
 must-revalidate
-proxy-revalidate
+proxy-revalidate  用在缓存服务器
 
 其他
-no-store
-no-transform 禁止代理服务器随意更改压缩返回的内容
+no-store--本地和代理服务器都是不可以进行缓存，永远都要去服务端获取新的内容；忽略任何缓存验证信息
+no-transform 禁止（有想法的）代理服务器随意更改压缩返回的内容
 
->注意，以上只是规范，
+>注意，以上只是规范，不强制
+'Cache-Control':'max-age=200,public'
+逗号分隔，同值覆盖，不同值共同起作用
 
-12集 7：44
+## 资源验证 Last-Modified和Etag--一般服务端设置
+
+浏览器-》 本地缓存 -》代理缓存 -》源服务器
+
+Last-Modified  上次修改时间
+配合If-Modified-Since或者If-Unmodified-Since使用（浏览器再次发送请求携带，）
+
+对比上次修改时间来验证资源是否需要更新
+
+Etag    数据签名
+    通过数据签名 进行验证，更为严格
+    对资源的内容进行hash计算 得到唯一值，作为资源签名
+    配合If-Match或者If-Non-Match使用
+对比资源的签名判断是否使用缓存
+
+服务端返回code 304 告诉浏览器可以使用缓存中的内容，忽略服务端的返回body内容
+
+chrome中disable cache勾上会帮我们忽略设置的验证头信息，直接取服务端的最新内容
+
+## Cookie Session
+Cookie是在服务端返回数据的时候，**通过Set-Cookie**这个header**设置**给浏览器，并在浏览器当中保存的一个内容。当**下一次**浏览器再发送**请求**的时候，**会自动带上**这个cookie
+
+键值对形式
+
+max-age设置时间多长 expires设置到什么时间点
+>都是设置过期时间
+Secure只有在https的时候发送
+HttpOnly 禁止js访问cookie
+无法通过document.cookie访问
+
+不能跨域设置cookie
+domain 设置二级域名可读取一级域名下的cookie
+
+hostadmin
+
+cookie保存session,但不一定要由cookie实现，反正他俩不是一个概念
+
+## 长连接
+Connection：Keep-Alive  默认就有
+            close 代表完成一个请求就关闭TCP连接
+服务端可以设置keep-alive的时间
+>chrome允许并发6个connection id
+
+信道复用  同域下只使用一个TCP连接  降低开销，提升速度
+
+HTTP2服务给我们带来的好处
+
+
+## 数据协商
+
+分类
+
+请求
+Accept 
+Accept-Encoding
+Accept-Language
+    q权重
+user-Agent
+
+返回
+Content-Type  实际返回内容的类型
+Content-Encoding  编码压缩方式
+Content-Language
+
+和上面的3个对应
+
+zlib
+
+## Redirect
+```js
+if(req.url==='/'){
+    res.writeHead(302, {//302-->200 不行
+    'Location':'/new'     
+    });
+    res.end('')
+}
+if(req.url==='/new'){
+    res.writeHead(200, {
+    'Content-Type':'text/html'     
+    });
+    res.end('<h1>hello</h1>')
+}
+
+```
+区别：
+302--临时跳转
+    /
+    /new
+    再次请求
+    /
+    /new
+301--永久跳转--慎重，使用后不可控
+    /
+    /new
+    再次请求，直接告诉浏览器，下次再遇到这个路径，你直接变更，不需要和服务器打招呼
+    /new
+
+## CSP
+Content-Security-Policy内容安全策略
+>主动屏蔽不安全的内容请求
+作用
+
+限制资源获取
+报告资源获取越权
+
+限制方式
+
+default-src限制全局
+制定限制类型
+script-src
+
+```js
+res.writeHead(200, {
+    'Content-Type':'text/html' ,
+    'Content-Security-Policy':'default-src http: https:'    
+    });
+```
+Content-Security-Policy-Report-Only
+
+详细信息查看：mdn csp
+
+## Nginx安装和基础代理配置
+
+一个单纯的HTTP服务器
+
+代理
+
+在http明文传输的过程中所有的东西都是不可靠的
+
+ 缓存
+
+ proxy_cache_path 配置缓存的存储路径
+ proxy_cache_path levels=1:2 keys_zone=my_cache:10m;
+
+ server{
+     location / {
+         proxy_cache my_cache
+     }
+ }
+ 代理缓存的意义，换了一个浏览器仍能很快的加载出来？
+
+ Vary  根据头是否相同返回内容
+
+
+ ## HTTPS
+ HTTP+Security
+
+ HTTP都是明文传输
+
+ HTTPS
+ 加密
+
+ 私钥--只放在服务器上
+ 公钥
+ >握手时传输
+
+ 首先客户端发送一个随机数，和加密套件给服务端
+
+ 服务端从中选取一个加密套件  生成一个随机数 返回随机数，加密套件名 加密证书
+
+ ## 如何在nginx中部署一个https服务
+
+ 证书生成命令
+
+ https默认使用端口443
+
+ 访问https://test.com
+
+ ## HTTP2优势
+
+ 信道复用
+
+ 分帧传输 每一帧都有上下文联系  所以不一定要按顺序
+ >在同一个TCP连接上可以去并发的发送多个http请求
+
+ Server Push 推送
+
+ ### 在nginx中配置http2
+
+ 和https一起用
+
+chrome://net.internals
