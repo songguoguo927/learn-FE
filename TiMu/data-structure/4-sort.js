@@ -1,40 +1,10 @@
-//排序算法有很多种,最具代表性的⼏种算法：
-//冒泡排序、希尔排序、归并排序、快速排序，
+//排序算法有很多种
+//简单排序方法：冒泡排序、选择排序、插入排序、
+//高级排序算法：归并排序、快速排序，希尔排序、
 //针对排序方法也是，不要一味的追求说哪个排序算法好就用哪一个
 //每一个算法都有其适应的场景，我们应当结合具体场景，具体数据特点选用不同的排序算法
 
-//归并排序 O(nlogn)  采用分治法 最佳情况：T(n) = O(n)；最差/平均情况：T(n) = O(nlogn)
-//归并排序是⼀种稳定的排序⽅法。将已有序的⼦序列合并，得到完全有序的序列；
-//即先使每个⼦序列有序，再使⼦序列段间有序。将两个有序表合并成⼀个有序表，称为2-路归并。
 
-//算法描述如下：
-//1. 把⻓度为n的输⼊序列分成两个⻓度为n/2的⼦序列；
-// 2. 对这两个⼦序列分别采⽤归并排序；
-// 3. 将两个排序好的⼦序列合并成⼀个最终的排序序列。
-const mergeSort = array => {
-  const len = array.length;
-  if (len < 2) {
-    return len;
-  }
-  const mid = Math.floor(len / 2);
-  const first = array.slice(0, mid);
-  const last = array.slice(mid);
-  return merge(mergeSort(first), mergeSort(last));
-};
-
-function merge(left, right) {
-  var result = [];
-  while (left.length && right.length) {
-    if (left[0] <= right[0]) {
-      result.push(left.shift());
-    } else {
-      result.push(right.shift());
-    }
-  }
-  while (left.length) result.push(left.shift());
-  while (right.length) result.push(right.shift());
-  return result;
-}
 
 //冒泡排序 O(n^2) 存在双重排序
 //实现思路:
@@ -84,33 +54,29 @@ function bubbleSort2(arr) {
     return arr;
   }
 }
-bubbleSort(arr);
-bubbleSort2(arr);
-bubbleSort3(arr);
+// bubbleSort(arr);
+// bubbleSort2(arr);
+// bubbleSort3(arr);
 //bubble 0.3
 // 改进2: 传统冒泡排序中每⼀趟排序操作只能找到⼀个最⼤值或最⼩值,
 //我们考虑利⽤在每趟排序中进⾏正向和反向两遍 冒泡的⽅法⼀次可以得到两个最终值(最⼤者和最⼩者) , 从⽽使排序趟数⼏乎减少了⼀半。
 function bubbleSort3(arr3) {
   var low = 0;
   var high = arr.length - 1; //设置变量的初始值
-  var tmp, j;
+  var  j;
   console.time("2.改进后冒泡排序耗时");
   while (low < high) {
     for (j = low; j < high; ++j) {
       //正向冒泡,找到最⼤者
       if (arr[j] > arr[j + 1]) {
-        tmp = arr[j];
-        arr[j] = arr[j + 1];
-        arr[j + 1] = tmp;
+        [arr[j],arr[j + 1]]=[arr[j + 1],arr[j]]
       }
     }
     --high; //修改high值, 前移⼀位
     for (j = high; j > low; --j) {
       //反向冒泡,找到最⼩者
       if (arr[j] < arr[j - 1]) {
-        tmp = arr[j];
-        arr[j] = arr[j - 1];
-        arr[j - 1] = tmp;
+        [arr[j],arr[j + 1]]=[arr[j + 1],arr[j]]
       }
     }
     ++low; //修改low值,后移⼀位
@@ -120,77 +86,43 @@ function bubbleSort3(arr3) {
   return arr3;
 }
 
-
-//快速排序 最佳/平均情况：T(n) = O(nlogn) 最差情况：T(n) = O(n2)
-
-//快排基本思想：
-//通过⼀趟排序将待排记录分隔成独⽴的两部分，
-//其中⼀部分记录的关键字均⽐另⼀部分的关键字⼩，
-//则可分别对这两部分记录继续进⾏排序，以达到整个序列有序。
-
-//算法描述和实现 1.从数组中选择中间⼀项作为主元；
-//2.创建两个指针，左边⼀个指向数组的第⼀项，右边指向数组最后⼀项。
-//移动左指针直到我们找到⼀个⽐主元⼤的元素，接着，移动右指针直到找到⼀个⽐主元⼩的元素。然后交换它们，
-//重复这个过程，直到左指针超过了右指针。这个过程是的⽐主元⼩的值都排在了主元之前，⽽⽐主元⼤的值都排在了主元之后，这⼀步叫**划分操作**
-
-//3.接着，算法对划分的小数组（比主元小的值组成的子数组，比主元大的值组成的小数组）重复上述两步，直至数组以完全排序
-
-const quickSort = (function() {
-  //默认状态下的比较函数
-  function compare(a, b) {
-    if (a === b) {
-      return 0;
-    }
-    return a < b ? -1 : 1;
-  }
-  function swap(array, a, b) {
-    [array[a], [array[b]]] = [array[b], array[a]];
-  }
-  //分治函数
-  function partition(array, left, right) {
-    //用index取中间值(主元)而非splice
-    const pivot = array[Math.floor((right + left) / 2)];
-    let i = left;
-    let j = right;
-
-    while (i <= j) {
-      while (compare(array[i], pivot) === -1) {
-        //移动左指针直到我们找到⼀个⽐主元⼤的元素
-        i++; //即在左指针指向的数小于主元，继续向右（向主元靠近的方向）移动
-      }
-      while (compare(array[j], pivot) === 1) {
-        //移动右指针直到我们找到⼀个⽐主元小的元素
-        j--; ////即在右指针指向的数大于主元，继续向左（向主元靠近的方向）移动
-      }
-      if (i <= j) {
-        swap(array, i, j);
-        i++;
-        j--;
-      }
-    }
-    return 1;
-  }
-  //快排函数
-  function quick(array,left,right){
-      let index;
-      if(array.length>1){
-          index = partition(array,left,right)
-          if(left<index-1){
-              quick(array,index,right)
-          }
-          if(index<right){
-              quick(array,index,right)
+//选择排序 遍历自身以后的元素，最小的元素和自己调换位置(原址比较排序法)
+///嵌套了两层循环 时间复杂度也是O(n^2)，
+function selectSort(arr) {
+  var len = arr.length;
+  for(let i = 0 ;i < len - 1; i++) {
+      for(let j = i+1 ; j<len; j++) {
+          if(arr[j] < arr[i]) {
+              [arr[i],arr[j]] = [arr[j],arr[i]];
           }
       }
-      return array;
   }
+  console.log(arr)
+  return arr
+}
 
-  return function quickSort(array){
-      return quick(array,0 ,array.length-1)
-  }
-})();
+selectSort(arr)
 
+// 插入排序: 即将元素插入到已排序好的数组中
+// 插入排序是最接近生活的排序，因为我们打牌时就差不多是采用的这种排序方法
 
-//希尔排序  核心在与间隔序列的设定
-//1959年Shell发明；第⼀个突破O(n^2)的排序算法；是简单插⼊排序的改进版；
-//它与插⼊排序的不同之处在于，它会优先⽐较距离较远的元素。希尔排序⼜叫缩⼩增量排序
+function insertSort(arr) {
+for(let i = 1; i < arr.length; i++) {  //外循环从1开始，默认arr[0]是有序段
+    for(let j = i; j > 0; j--) {  //j = i,将arr[j]依次插入有序段中
+        if(arr[j] < arr[j-1]) {
+            [arr[j],arr[j-1]] = [arr[j-1],arr[j]];
+        } else {
+            break;
+        }
+    }
+}
+return arr;
+}
+//插入排序比一般的高级排序算法--快排，堆排性能要差，但是还是具有以下优点
+//1、实现起来简单 理解起来不是很复杂
+//2、对于较小的数据集而言比较高效
+//3、相对于其他复杂度为O(n^2)的排序算法-冒泡，选择而言更加快速
+//4、稳定，及时
+
+// 到目前为止，已经介绍了三种排序方法，包括冒泡排序、选择排序和插入排序。
+//这三种排序方法的时间复杂度都为O(n^2)，其中冒泡排序实现最简单，性能最差，选择排序比冒泡排序稍好，但是还不够，插入排序是这三者中表现最好的，对于小数据集而言效率较高。这些原因导致三者的实用性并不高，都是最基本的简单排序方法，多用于教学，很难用于实际中，从这节开始介绍更加高级的排序算法
