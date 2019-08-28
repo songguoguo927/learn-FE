@@ -17,7 +17,8 @@ JS本地存储的方法
 call apply 
 
 介绍JS中的闭包
-ES6常用特性  箭头函数
+ES6常用特性：箭头函数 let const 模板字符串 解构 rest 展开运算符 promise 类
+    ES6还有其他一些功能，包括列表迭代器、类型数组、Set、Map、WeakSet、WeakMap、模块、尾调用、Symbol，
 
 三次握手
 http常见请求方法及用处
