@@ -84,4 +84,41 @@ console.log(aValues.next()) //{ value: 3, done: false }
 console.log(aValues.next()) //{ value: undefined, done: true }//没有可迭代的值的表现
 
 //Array.from方法很有用
-//1，将类数组对象转成数组
+//1，将类数组对象（含有length属性）转成数组
+//Array.from还可以接受第二个参数，作用类似于数组的map方法，用来对每个元素进行处理，将处理后的值放入返回的数组
+Array.from([1,2,3],x=>x*x) //[1,4,9]
+Array.from({length:2},()=>"jack") //["jack","jack"]
+
+//Array.of方法根据传入的参数创建一个新数组 弥补Array()的不足
+//Array(1) //长度为1 [undefined]
+//Array.of(1) //[1]
+//1,复制已有的数组
+let nums = Array.of(...numbers)
+//和Array.from(numbers)的效果是一样的
+
+//fill方法--用静态值填充数组
+//fill(填充的值[,开始填充的索引][,填充结束的索引])
+
+//copyWithin方法 --复制数组中的一系列元素到同一数组指定的起始位置
+
+//排序元素
+// reverse   反序
+//sort 默认啥也不传的话，把元素默认成字符串进行相
+// 互比较。排序  JavaScript在做字符比
+// 较的时候，是根据字符对应的ASCII值来比较的。
+//一般我们需要传入自己写的比较函数，在数组中都是数字
+//可以这样写
+arr.sort((a,b)=>a-b) //
+
+//搜索
+//indexOf
+//lastIndexOf
+//find和findIndex方法接收一个回调函数，搜索一个满足回调函数条件的值。
+//find 返回第一个满足条件的值 没有返回undefined
+//findIndex 返回这个满足条件的值在数组里的索引 没有则返回-1
+//includes 数组中存在某个元素 会返回true 否则false
+//includes还可以接受第二个参数 搜索起始索引
+
+//输出数组为字符串
+// toString 如果想把数组里所有元素输出为一个字符串，可以用toString方法：
+// join 如果想用一个不同的分隔符（比如-）把元素隔开，可以用join方法
