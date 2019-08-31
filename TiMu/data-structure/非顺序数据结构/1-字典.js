@@ -49,3 +49,5 @@ function Dictionary(){
     }
 }
 console.log(Dictionary.items)
+
+module.exports = Dictionary;
