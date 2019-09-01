@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>表格模拟后台数据获取</title>
+  </head>
+  <body>
+    <button>加载数据</button>
+    <table>
+      <thead>
+        <tr>
+          <th>学号</th>
+          <th>姓名</th>
+          <th>年龄</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <script>
+      window.onload = function() {
+        var arr = [
+          {
+            sno: 1001,
+            name: "xxx",
+            age: 18
+          },
+          {
+            sno: 1002,
+            name: "xxx",
+            age: 18
+          },
+          {
+            sno: 1003,
+            name: "xxx",
+            age: 18
+          }
+        ];
+        /**
+         * 按钮点击后，数据展示到页面中
+         * document.getElementsByTagName('button')  返回的是一个类数组
+         */
+        var btn = document.getElementsByTagName("button")[0];
+        var tbody = document.getElementsByTagName("tbody")[0];
+        btn.onclick = function() {
+        //   alert(1);
+        /**
+         * 数组中的一个对象--》tr行
+         * 对象的属性值--》td
+         * 创建一次 就追加一次（怕后面忘记写），然后再写具体内容
+        */
+       //清空tbody 
+       tbody.innerHTML = null;
+       arr.forEach(function(item){
+        var newTr = document.createElement('tr');
+        var stdStr=''
+        for(key in item ){
+            // var newTd = document.createElement('td');
+            // newTd.innerText = item[key];
+            // newTr.appendChild(newTd)
+            stdStr += `<td>${item[key]}</td>`
+        }
+        newTr.innerHTML = stdStr;
+        tbody.appendChild(newTr);
+       })
+        };
+      };
+    </script>
+  </body>
+</html>

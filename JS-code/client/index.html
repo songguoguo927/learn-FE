@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>原生ajax-请求数据</title>
+    <script src="myajax.js"></script>
+  </head>
+  <body>
+    <h1>原生ajax-请求数据--封装自己的ajax</h1>
+    <button onclick="">click me to get a.txt</button>
+    <div id="my-div"></div>
+    <form action="http://localhost:3000/dealpost" method="post">
+      <label>name:<input type="text" name="name"/></label>
+      <label>password:<input type="password" name="password"/></label>
+      <input type="submit" value="提交" />
+    </form>
+    <input type="file" name="photo" id="" />
+    <script>
+      ajax(
+        "get",
+        "../server/hello.json",
+        function(data) {
+          // console.log("111");
+          // alert(xhr.responseText);
+          //对json文件处理
+          var txtObj = JSON.parse(xhr.responseText.toString());
+          document.getElementById("my-div").innerHTML =
+            txtObj.name + " " + txtObj.sex + " " + txtObj.age;
+        },
+        function() {
+          console("Opps err");
+        }
+      );
+    </script>
+  </body>
+</html>

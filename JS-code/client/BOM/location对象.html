@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>location and history</title>
+  </head>
+
+  <body>
+    <button>打开新页面</button>
+    <button>刷新</button>
+    <button>跳转下一页</button>
+  </body>
+  <script>
+    window.onload = function() {
+      console.log("学习location对象相关的属性和方法");
+      console.log(location);
+      console.log(window.location === document.location); //true
+
+      document.getElementsByTagName('button')[0].onclick =function(){
+        //   location = './番茄时钟.html'; //往历史记录中添加一条 可返回上一页
+        //   window.location.href = './超时-间歇调用.html' location.href 一样
+        location.assign('./超时-间歇调用.html')
+        // location.replace('./超时-间歇调用.html') //不往历史记录中添加
+        //上面的是在同一个选项卡中操作
+        // window.open('./超时-间歇调用.html') //在新的选项卡中打开一个页面
+
+      }
+      document.getElementsByTagName('button')[1].onclick =function(){
+          
+          //参数默认为false 从缓存中取，为true 强制从服务器取
+          location.reload()
+    }
+    document.getElementsByTagName('button')[2].onclick =function(){
+        //   history.forward();
+        //参数  正数向下几页 负数向上几页跳转
+        history.go()
+         
+    }
+    };
+  </script>
+</html>

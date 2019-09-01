@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Element类型测试栗子</title>
+    <style>
+    .red{
+        background: red;
+    }
+    .blue{
+        background: blue;
+    }
+    </style>
+</head>
+<body>
+    hello
+    <div id="one" class="red" title="我是div" data-flag="1001" style="color:black" onclick="test()">
+        one
+        two
+        three
+        <span>four</span>
+    </div>
+    <script>
+    window.onload = function(){
+        // document.getElementById("one")
+        var div = document.body.children[0]
+    //     console.log(div)
+    //     console.log(document.body.firstElementChild)
+    //     //获取属性值
+    //     console.log(div.className)
+    //     console.log(div.title)
+    //     console.log(div.getAttribute('class'))
+     
+    //     console.log(div.style)//返回对象
+    //     console.log(div.getAttribute('style')) //返回字符串
+    //     // div.setAttribute('style',"color:blue")
+    //     div.style.color="white";
+    //    // div.style.backgroundColor="red";
+    //     console.log(div.onclick)//返回函数
+    //     console.log(div.getAttribute('onclick')) //返回字符串
+       
+        //修改属性值
+        // div.title = "hello"
+        // div.setAttribute('title',"helo")  //推荐去更改自定义属性值
+        //移除属性
+        // div.removeAttribute('title')
+        // //打印所有的属性
+        // console.log(div.attributes)  //属性节点组成的类数组
+        // console.log(div.attributes[1]) //属性节点对象
+        // div.attributes[1].nodeValue="blue" //
+        // console.log(div.attributes)
+
+        //innerHTML和innerText
+        // console.log(div.innerHTML)  //识别内部所有内容
+        // console.log(div.innerText) //只识别内部文本 无回车换行
+        // console.log(div.textContent) //只识别内部文本 有回车换行
+       
+        div.innerText = 'hello';//不可解析html代码片段
+        div.innerHTML = `<li>hhhh</li>
+                        <li>hhhh</li>
+                        <li>hhhh</li>
+                        <li>hhhh</li>`;//可以解析
+    }
+    function test(){
+        // alert(1)
+        //点击div切换背景色
+        var div = document.getElementById("one");
+        div.className = div.className==="red" ? "blue" : "red";
+    }
+    </script>
+</body>
+</html>

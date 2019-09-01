@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        div{
+        border: 1px solid red;
+        width: 50px;
+        }
+    </style>
+  </head>
+  <script>
+    /**
+     * keyCode  左上右下 37 38 39 40
+     * 1.使用键盘上下左右键移动小车。注意车头方向也要发生变化。
+     * 2.实现在网页上画椭圆。关注event事件对象的clientX,clientY属性。
+    */
+    window.onload = function(){
+    // console.log(this)//window
+    document.body.onkeydown = function(e){
+        // console.log(e.keyCode)
+        var code = e.keyCode;
+            switch(code){
+                case 37:
+                    moveLeft();
+                    break;
+                case 38:
+                    moveUp();
+                    break;
+                case 39:
+                    moveRight();
+                    break;
+                case 40:
+                    moveDown();
+                    break;
+            }
+    }
+    function moveRight(){
+        //div头向左  平移100px
+        console.log('sss');
+        var div = document.getElementsByTagName('div')[0];
+        // div.style.transform='rotate(90deg)';
+        // div.style.transform='translate(0,100px)';
+        div.setAttribute('style','transform: translateX(100px) rotate(90deg);')
+        // console.log(div.style.transform)
+    }
+    function moveLeft(){
+        var div = document.getElementsByTagName('div')[0];
+        div.setAttribute('style','transform: translateX(100px) rotate(180deg);')
+
+    }
+    document.body.onmousedown = function(e){
+        console.log(e)
+        console.log('鼠标按下')
+       this.onmousemove = function(e){
+        console.log(e)
+        console.log('鼠标拖动')
+    }
+    }
+    
+    document.body.onmouseup = function(e){
+        console.log(e)
+        console.log('鼠标弹起')
+    }
+}
+  </script>
+  <body>
+    <div>
+        头<br>
+      把我想象成一个坦克
+    </div>
+  </body>
+</html>

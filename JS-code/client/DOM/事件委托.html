@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+    window.onload = function(){
+        /**
+         * 点击1弹出1；2弹出2；。。
+         * 解决方案
+         * 1.for遍历ul中的li，给每个li绑定事件
+         * 2.forEach遍历lis 避开闭包问题
+         * 3.上述缺陷：绑定的函数过多
+        */
+     
+       var lis = document.getElementsByTagName("li");
+       for(var i =0;i<lis.length;i++){
+        //    lis[i].onclick = function(){
+        //     alert(i) //无意中写了个闭包，点击任何一个都是弹出最大的一个，去解决
+        //    }
+
+        // lis[i].onclick = (function(num){
+        //     alert(num+1) 
+        //    })(i);
+       }
+
+    lis = Array.prototype.slice.call(lis,0)
+    // lis.forEach(function(item,index){
+    //     item.onclick = function(){
+    //         alert(index+1)
+    //     }
+    // })    
+    
+    //事件代理 原先给li绑定的事件，让父元素去代理绑定
+    var oUl = document.getElementById("myul");
+    oUl.onclick = function(e){
+        //  alert('sss')
+        // console.log(e.currentTarget);
+        if(e.target.nodeName === "LI"){//消除点空白会弹
+            /**
+             * 点击哪个li哪个li变红，其余的li白色
+             * 
+            */
+           lis.forEach(function(item){//"#fff"
+               item.style.background = null;
+           })
+            e.target.style.background ='red';
+        }
+       
+       }
+    }
+    </script>
+</head>
+<body>
+    <ul id="myul">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jsonp-demo</title>
+</head>
+<body>
+    <div id="box">jsonp</div>
+    <script>
+        /*必要的情况下可动态创建*/
+        // var val = "jsonp"
+        //  var commonPre =
+        // "https://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&prod=pc&from=pc_web&sugsid=1438,21122,20698,29238,28518,29099,28839,29221&";
+        // var script = document.createElement("script")
+        // script.src = `${commonPre}&wd=${val}&cb=getData`
+        // document.body.appendChild(script)
+    // function getData(data){
+    //     console.log(data)
+    // }
+    function jsonp9(data){
+        console.log(data)
+    }
+    </script>
+    <script src="http://cache.video.iqiyi.com/jp/avlist/202861101/1/?callback=jsonp9"></script>
+    <!-- <script src="https://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&prod=pc&from=pc_web&sugsid=1438,21122,20698,29238,28518,29099,28839,29221&wd=jsonp&cb=getData"></script> -->
+</body>
+</html>

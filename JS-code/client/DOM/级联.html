@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script>
+      //模拟数据的获取及动态添加节点
+      var grades = [
+        {
+          id: 1001,
+          name: "一年级"
+        },
+        {
+          id: 1002,
+          name: "二年级"
+        },
+        {
+          id: 1003,
+          name: "三年级"
+        }
+      ];
+      var clazzes = [
+        {
+          id: 101,
+          name: "一年级一班",
+          gradeId: 1001
+        },
+        {
+          id: 102,
+          name: "一年级二班",
+          gradeId: 1001
+        },
+        {
+          id: 103,
+          name: "一年级三班",
+          gradeId: 1001
+        },
+        {
+          id: 104,
+          name: "二年级一班",
+          gradeId: 1002
+        },
+        {
+          id: 105,
+          name: "二年级二班",
+          gradeId: 1002
+        },
+        {
+          id: 106,
+          name: "二年级三班",
+          gradeId: 1002
+        }
+        ,
+        {
+          id: 107,
+          name: "三年级一班",
+          gradeId: 1003
+        },
+        {
+          id: 108,
+          name: "三年级二班",
+          gradeId: 1003
+        },
+        {
+          id: 109,
+          name: "三年级三班",
+          gradeId: 1003
+        }
+      ];
+      window.onload = function(){
+          var gradeSelect =document.getElementById('grade');
+          var clazzSelect =document.getElementById('clazz');
+          var newOption = '<option value="">请选择年级</option>';
+          grades.forEach(function(item){
+              newOption += `<option value="${item.id}">${item.name}</option>`            
+            //   console.log('sssss')
+          })
+          gradeSelect.innerHTML=newOption
+          gradeSelect.onchange = function(){
+            // console.log(this.value)
+            var self = this;
+            if(self.value){
+                var classReasult = clazzes.filter(function(item){//在数组迭代方法内部的this并不指向上面的this，指向该filter函数的第二个参数
+                    return item.gradeId==self.value; //数值类型不匹配
+                    // console.log(this)
+                },null)
+                // console.log(classReasult)
+                var str='<option value="">请选择班级</option>';
+                classReasult.forEach(function(item){
+                    str += `<option value="${item.id}">${item.name}</option>`
+                })
+                clazzSelect.innerHTML = str;
+                //去掉班级的select
+                clazzSelect.disabled = false;
+            }else{
+                //禁用班级的select
+                clazzSelect.innerHTML = '<option value="">请选择班级</option>';
+                clazzSelect.disabled = true;
+            }
+          }
+      }
+    </script>
+  </head>
+  <body>
+    <select name="" id="grade">
+        <option value="">请选择</option>
+    </select>
+    <select name="" id="clazz" disabled>
+        <option value="">请选择</option>
+    </select>
+  </body>
+</html>

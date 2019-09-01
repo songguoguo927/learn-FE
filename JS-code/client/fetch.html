@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>fetch-请求数据</title>
+  </head>
+  <body>
+    <h6>fetch-请求数据</h6>
+    <div id="my-div"></div>
+    <script>
+      // var word = "123",
+      //   url =
+      //     "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=" +
+      //     word +
+      //     "&json=1&p=3";
+      // fetch(url, { mode: "no-cors" })
+      //   .then(function(response) {
+      //     return response;
+      //   })
+      //   .then(function(data) {
+      //     console.log(data);
+      //   })
+      //   .catch(function(e) {
+      //     console.log("Oops, error");
+      //   });
+
+      //===获取txt文件使用response.text()  text()是ResponsePrototype的方法，被继承了
+      var url = "http://localhost:3000/123";
+      fetch(url, { method: "get" })
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          console.log("111");
+          console.log(data);
+          document.getElementById("my-div").innerHTML =
+            data.name + " " + data.sex + " " + data.age;
+        })
+        .catch(function(e) {
+          console.log("Oops, error");
+        });
+
+      //---以下有跨域限制
+      // fetch("http://example.com/movies.json")
+      //   .then(function(response) {
+      //     return response.json();
+      //   })
+      //   .then(function(myJson) {
+      //     console.log(myJson);
+      //   });
+    </script>
+  </body>
+</html>

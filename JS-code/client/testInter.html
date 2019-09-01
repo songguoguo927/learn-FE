@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <title>Document</title>
+  </head>
+  <body>
+      <div class="box"></div>
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+       $.ajax({
+          type:'get',
+          url:'http://localhost:3000/123',
+          success:function(data){
+            console.log('111') ;        
+            console.log(data);
+          },
+          error:function(){
+          console.log('error');
+          }
+          })
+          document.cookie='user=xjm';
+          document.cookie='age=18';  
+          alert(document.cookie)
+    </script>
+  </body>
+</html>

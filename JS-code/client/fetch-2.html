@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>上传文件/数据</title>
+  </head>
+  <body>
+    <input type="file" />
+    <script>
+      var url = "../server";
+      var data = { username: "example" };
+
+      fetch(url, {
+        method: "POST", // or 'PUT'
+        body: JSON.stringify(data), // data can be `string` or {object}!
+        headers: new Headers({
+          "Content-Type": "application/json"
+        })
+      })
+        .then(res => res.json())
+        .catch(error => console.error("Error:", error))
+        .then(response => console.log("Success:", response));
+    </script>
+  </body>
+</html>

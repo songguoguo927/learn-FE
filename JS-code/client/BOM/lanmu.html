@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="./myajax.js"></script>
+    <script>
+      window.onload = function() {
+        var tbody = document.getElementsByTagName("tbody")[0],
+          batchDeleteBtn = document.getElementById("batchdelete"),
+          addBtn = document.getElementById("add");
+        function findAllCategory() {
+          myAjax({
+            method: "get",
+            url: "manager/category/findAllCategory",
+            success: function(res) {
+              bindHTML(JSON.parse(res).data);
+            }
+          });
+        }
+        findAllCategory();
+        function bindHTML(data) {       
+          if(data&&data.length>0){
+            var str = "";
+          data.forEach(function(item) {
+            str += `
+             <tr>
+                <td><input type='checkbox' name="id" value="${item.id}"/></<td>
+                <td>${item.name}</td>
+                <td>${item.comment}</td>               
+                <td><button data-btnId="${item.id}">删除</button></td>
+            </tr>`;
+          });
+          tbody.innerHTML = str;
+          }
+        }
+
+        //tbody 给删除按钮做代理ok
+        tbody.onclick = function(e) {
+          var target = e.target;
+        //   console.log(target.getAttribute('data-btnId'))
+          if (target.nodeName === "BUTTON") {
+              var id = target.getAttribute('data-btnId');
+            myAjax({
+                method:"get",
+                url:'manager/category/deleteCategoryById?id='+id,
+                success:function(res){
+                    console.log(res)
+                    findAllCategory();
+                }
+            })
+          }
+        };
+
+        // 进行批量删除ok
+        batchDeleteBtn.onclick = function() {
+          // console.log('aa')
+          //获取用户选中的input
+          var inputs = document.getElementsByTagName("input");
+          inputs = Array.prototype.slice.call(inputs, 0);
+          // console.log(inputs)
+          var inputResult = inputs.filter(function(item) {
+            return item.checked === true;
+          });
+          //   console.log(inputResult)
+          if (inputResult.length > 0) {
+            var inputResultID = [];
+            inputResult.forEach(function(item) {
+              inputResultID.push(item.value);
+            });
+            var ids = inputResultID.toString();
+            myAjax({
+              method: "post",
+              url: "manager/category/batchDeleteCategory",
+              data:{ids:ids},
+              dataType:'form',
+              success: function(res) {
+                console.log(res);
+                findAllCategory();
+              }
+            });
+          } else {
+            alert("请选择需要删除的数据");
+          }
+        };
+//出现问题：第一条无法批量删除和删除
+        //新增ok
+        addBtn.onclick = function() {
+          //弹出模态框，输入信息，获取输入的信息 放到data中
+         
+          myAjax({
+            method: "post",
+            url: "manager/category/saveOrUpdateCategory",
+            data: { name: "xjm", comment: "test", no: 12 },
+            dataType: "form",
+            success: function(res) {
+              console.log(res);
+              findAllCategory();
+            }
+          });
+        
+        };
+        // 修改
+
+        //表格范围内滚动 且头部固定  当作两个表格处理
+
+        //分页
+
+        //完整的前后台增删改查 理一下
+        
+      };
+    </script>
+  </head>
+  <body>
+    <!-- 查：展示数据
+        删：单条，批量
+        增：新增 -->
+    <button id="add">新增</button>
+    <button id="batchdelete">批量删除</button>
+
+    <table>
+      <thead>
+        <tr>
+          <th>编号</th>
+          <!-- 放置input框 -->
+          <th>名字</th>
+          <th>评论</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <tr>
+          <td><input type="checkbox" name="id" value="" /></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><button>删除</button></td>
+        </tr> -->
+      </tbody>
+    </table>
+  </body>
+</html>

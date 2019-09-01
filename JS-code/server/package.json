@@ -1,0 +1,16 @@
+{
+    "name": "mockserver",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "server": "node mock/index.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "chalk": "^2.4.1",
+        "portfinder": "^1.0.19"
+    }
+}

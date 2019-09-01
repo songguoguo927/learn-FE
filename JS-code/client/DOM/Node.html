@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Node类型的属性和方法介绍</title>
+    <script>
+        
+      window.onload = function (){
+        // console.log(document.body)
+        // console.log(document.body.nodeName)
+        // console.log(document.body.nodeValue)
+        console.log(document.body.childNodes)
+        var childs = document.body.childNodes;
+        console.log(childs[0])
+        var arr = Array.prototype.slice.call(childs,0)
+        console.log(arr)
+        console.log(arr[0])
+        // alert(1)
+      }
+    </script>
+</head>
+<body>
+    <div>hello</div>
+    <span>world</span>
+    <!-- 888888 -->
+    <!-- <script>
+    // console.log(document)
+    // console.log(document.constructor)  //HTMLDocument
+    // console.log(HTMLDocument.prototype.__proto__.constructor) //Document
+    // console.log(Document.prototype.__proto__.constructor) //Node
+    // console.log(Node.prototype.__proto__.constructor) //EventTarget
+    // console.log(EventTarget.prototype.__proto__.constructor) //Object
+    // console.log(Object.prototype.__proto__) //null
+    console.log(document.body)
+    </script> -->
+</body>
+</html>

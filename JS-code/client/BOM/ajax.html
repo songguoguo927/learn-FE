@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>ajax</title>
+    <script>
+        // deleteCatetory(106);
+        batchDeleteCatetory({ids:[1111,2222].toString()});//谁先谁后不一定
+        saveOrUpdateCategory({ name: "xjm", comment: "xjm1", no: 12 })
+        saveOrUpdateCategory({ id:100,name: "xjm", comment: "xjm1", no: 12 })
+        
+        // var xhr = new XMLHttpRequest();
+        // xhr.open("get", "http://www.wangshuwen.com/api/getRegion");
+        // xhr.onreadystatechange = function() {
+        //   if ((xhr.status === 200) & (xhr.readyState === 4)) {
+        //     // console.log(xhr.responseText)
+        //     var result = JSON.parse(xhr.responseText);
+        //     console.log(result);
+        //   }
+        // };
+        // xhr.send();
+        function findAllCategory(){
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET','http://134.175.154.93:8099/manager/category/findAllCategory ');
+            xhr.onreadystatechange = function(){
+                if(xhr.status===200&&xhr.readyState===4){
+                    console.log(xhr.responseText)
+                }
+            }
+            xhr.send();
+        }
+        
+        function saveOrUpdateCategory(obj) {
+          var xhr2 = new XMLHttpRequest();
+          xhr2.open(
+            "POST",
+            "http://134.175.154.93:8099/manager/category/saveOrUpdateCategory"
+          );
+          xhr2.setRequestHeader(
+            "Content-Type",
+            "application/x-www-form-urlencoded;charset=utf-8"
+          );
+          xhr2.onreadystatechange = function() {
+            if (xhr2.status === 200 && xhr2.readyState === 4) {
+              console.log(xhr2.responseText);
+            }
+          };
+          xhr2.send(encodeFormData(obj));
+        }
+        
+        //单个删除，参数 要删除的id
+        function deleteCatetory(id){
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET','http://134.175.154.93:8099/manager/category/deleteCategoryById?id='+id);
+            xhr.onreadystatechange = function(){
+                if(xhr.status===200&&xhr.readyState===4){
+                    console.log(xhr.responseText)
+                    findAllCategory();
+                }               
+            }
+            xhr.send();
+        }
+        //批量删除
+        function batchDeleteCatetory(obj){
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST','http://134.175.154.93:8099/manager/category/batchDeleteCategory');
+            xhr.setRequestHeader(
+            "Content-Type",
+            "application/x-www-form-urlencoded;charset=utf-8"
+          );
+            xhr.onreadystatechange = function(){
+                if(xhr.status===200&&xhr.readyState===4){
+                    console.log(xhr.responseText) 
+                    findAllCategory();
+                }
+               
+            }
+            xhr.send(encodeFormData(obj));
+        }
+        //将js的对象转换成表单格式的数据
+        function encodeFormData(data) {
+          if (!data) {
+            return "";
+          }
+          var pairs = [];
+          for (var name in data) {
+            if (!data.hasOwnProperty(name)) {
+              continue; //如果该属性不是对象的自有属性，跳出进行下一次循环
+            }
+            if (typeof data[name] == "function") {
+              continue;
+            }
+            var value = data[name].toString();
+            name = encodeURIComponent(name.replace("%20", "+")); //编码名字
+            value = encodeURIComponent(value.replace("%20", "+")); //编码值
+            pairs.push(name + "=" + value);
+          }
+          return pairs.join("&");
+        }
+ 
+    </script>
+  </head>
+  <body></body>
+</html>

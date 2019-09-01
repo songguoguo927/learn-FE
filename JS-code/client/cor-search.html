@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>JSONP跨域适用Get请求搜索--关键字联想</title>
+  </head>
+  <body>
+    <input type="search" name="" id="text" />
+    <button>baidu一哈</button>
+    <div id="search">
+      <ul></ul>
+    </div>
+    <script>
+      /*20190709*/
+      var commonPre =
+        "https://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&prod=pc&from=pc_web&sugsid=1438,21122,20698,29238,28518,29099,28839,29221&";
+      var ul = document.getElementsByTagName("ul")[0];
+      var txt = document.getElementById("text");
+      //什么时候很重要
+      txt.onkeyup = function() {
+        var val = txt.value;
+        // console.log(val);
+        //如何动态修改wd？=》修改src wd在这里既文本框输入的值
+        var script = document.createElement("script");
+        script.src = `${commonPre}&wd=${val}&cb=jQuery110209256834795658402_1562663426868`;
+        document.body.appendChild(script);
+      };
+      //下面就是jsonp的应用
+      function jQuery110209256834795658402_1562663426868(json) {
+        ul.innerHTML = ""; //不加这一行的话会无限追加li在ul中，所以每次创建之前先清空
+        // console.log(json.g); //数据拿到了
+        json.g.forEach(function(el) {
+          // console.log(el.q);
+          var li = document.createElement("li");
+          // var href = `${commonPre}&wd=${val}`;
+          li.innerHTML = "<a href=commonPre+'&wd='+val>" + el.q + "</a>";
+          ul.appendChild(li);
+        });
+      }
+      /*跨域：可以获取到不同域名下的服务器的数据*/
+    </script>
+    <!-- <script src="https://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&prod=pc&from=pc_web&sugsid=1438,21122,20698,29238,28518,29099,28839,29221&wd=123&cb=jQuery110209256834795658402_1562663426868&_=1562663426884"></script> -->
+  </body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div{
+            margin:0 auto;
+            /* border-radius:50%;  */
+        }
+    div.outer{
+        width:300px;
+        height:300px;
+       background: rebeccapurple;
+    }
+    div.center{
+        width:200px;
+        height:200px;
+       background: pink;
+    }
+    div.inner{
+        width:100px;
+        height:100px;
+       background: chocolate;
+    }
+    </style>
+    <script>
+    window.onload = function(){
+        /**
+         * 1,包裹
+         * 2，绑定相同的事件类型
+        */
+        var outer = document.getElementsByClassName('outer')[0];
+        var center = document.getElementsByClassName('center')[0];
+        var inner = document.getElementsByClassName('inner')[0];
+        // inner.onclick = function(){
+        //     console.log(this)
+        //     console.log('inner')
+        // }
+        // center.onclick = function(){
+        //     console.log(this)
+        //     console.log('center')
+        // }
+        // outer.onclick = function(){
+        //     console.log(this)
+        //     console.log('outer')
+        // }
+        function handler(e){
+            console.log(e)
+            console.log(e.target,'---ttt') //事件目标，触发事件执行的元素 源头--[event.target返回触发事件的元素]
+            console.log(e.currentTarget,'---cur')
+            console.log(this,'---this'); //和e.currentTarget的值一样
+            //event.currentTarget的作用是什么呢，我觉得他和this 的作用是差不多的，始终返回的是绑定事件的元素
+            console.log(this.className)
+            //阻止冒泡
+            // if(e.stopPropagation){
+            //     e.stopPropagation()
+            // }else{
+            //     e.cancelBubble = true;
+            // }
+        }
+        inner.onclick = handler;
+        center.onclick = handler;
+        outer.onclick = handler;
+    }
+    </script>
+</head>
+<body>
+    <div class="outer">
+        outer
+        <div class="center">
+            center
+            <div class="inner">inner</div>
+        </div>
+    </div>
+</body>
+</html>

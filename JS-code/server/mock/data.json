@@ -1,0 +1,15 @@
+[
+    {
+      "api": "/test",
+      "path": "test.json"
+    },
+    {
+        "api": "/hello",
+        "path": "../hello.json"
+    },
+    {
+        "api": "/text",
+        "path": "../a.txt"
+    }
+  ]
+  

@@ -1,0 +1,18 @@
+{
+  "name": "es6-basic",
+  "version": "1.0.0",
+  "description": "这是es6基础知识，敲得一些栗子代码",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel ./node-support --out-dir ./browser-support",
+    "dev":"npm run start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-latest": "^6.24.1"
+  }
+}

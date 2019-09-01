@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script>
+      var stus = [
+        {
+          id: 1,
+          name: "xjm1",
+          age: 18,
+          sex: "女"
+        },
+        {
+          id: 2,
+          name: "xjm2",
+          age: 18,
+          sex: "女"
+        },
+        {
+          id: 3,
+          name: "xjm3",
+          age: 18,
+          sex: "女"
+        },
+        {
+          id: 4,
+          name: "xjm4",
+          age: 18,
+          sex: "女"
+        }
+      ];
+      window.onload = function() {
+        var tbody = document.getElementsByTagName("tbody")[0],
+          batchDeleteBtn = document.getElementById("batchdelete"),
+          addBtn = document.getElementById("add");
+        var str = "";
+        stus.forEach(function(item) {
+          str += `
+            <tr>
+                    <td><input type='checkbox' name="id" value="${
+                      item.id
+                    }"/></<td>
+                    <td>${item.name}</td>
+                    <td>${item.age}</td>
+                    <td>${item.sex}</td>
+                    <td><button>删除</button></td>
+                </tr>`;
+        });
+        tbody.innerHTML = str;
+
+        //tbody 给删除按钮做代理
+        tbody.onclick = function(e) {
+          var target = e.target;
+          if (target.nodeName === "BUTTON") {
+            this.removeChild(target.parentNode.parentNode);
+          }
+        };
+
+        // 进行批量删除
+        batchDeleteBtn.onclick = function() {
+          // console.log('aa')
+          //获取用户选中的input 过滤为true的
+          var inputs = document.getElementsByTagName("input");
+          inputs = Array.prototype.slice.call(inputs, 0);
+          // console.log(inputs)
+          var inputResult = inputs.filter(function(item) {
+            return item.checked === true;
+          });
+          // console.log(inputResult)
+          if (inputResult.length > 0) {
+            inputResult.forEach(function(item) {
+              tbody.removeChild(item.parentNode.parentNode);
+            });
+          } else {
+            alert("请选择需要删除的数据");
+          }
+        };
+
+        //新增
+        addBtn.onclick = function() {
+          var newTr = document.createElement("tr");
+          var str = `
+           
+                <td><input type="checkbox"></td>
+                <td>terry</td>
+                <td>12</td>
+                <td>男</td>
+                <td><button>删除</button></td>
+            `;
+          newTr.innerHTML = str;
+          tbody.appendChild(newTr);
+        };
+      };
+    </script>
+  </head>
+  <body>
+    <!-- 查：展示数据
+        删：单条，批量
+        增：新增 -->
+    <button id="add">新增</button>
+    <button id="batchdelete">批量删除</button>
+
+    <table>
+      <thead>
+        <tr>
+          <th>编号</th>
+          <!-- 放置input框 -->
+          <th>名字</th>
+          <th>年龄</th>
+          <th>性别</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <tr>
+          <td><input type="checkbox" name="id" value="" /></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><button>删除</button></td>
+        </tr> -->
+      </tbody>
+    </table>
+  </body>
+</html>

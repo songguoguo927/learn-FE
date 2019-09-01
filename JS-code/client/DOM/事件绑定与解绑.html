@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    div{
+        width:100px;
+        height:100px;
+        background: rebeccapurple;
+    }
+    </style>
+    <script>
+    window.onload = function(){
+        var div=document.getElementsByTagName('div')[0];
+        var btn=document.getElementsByTagName('button')[0];
+        /*DOM0级*/
+        /*div.onclick = function(){
+            alert('1')
+        }
+        btn.onclick = function(){
+            div.onclick = null;
+            alert('div解绑成功');
+            this,style.background = '#ccc';
+            this.onclick=null;//点一次就不能点了
+
+        }*/
+         /*DOM2级  默认false在冒泡阶段执行*/
+         function handle1(){
+              alert('1')
+         }
+         function handle2(){
+              alert('2')
+         }
+         div.addEventListener('click',handle1,false)
+         div.addEventListener('click',handle2,false)
+         div.onclick = function(){
+             alert('3')
+         }
+         div.onclick = function(){
+             alert('4')
+         }
+         //上面点击结果弹出1 2 4
+         div.removeEventListener('click',handle1,false)
+         //IE8及以下事件绑定  绑定多个倒序执行
+         
+    }
+    </script>
+</head>
+
+<body>
+    <div>点击我</div>
+    <button>div解绑</button>
+</body>
+</html>

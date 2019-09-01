@@ -1,0 +1,6 @@
+class6 xjm girl 18
+class6 gugu boy 17
+class6 qiiq girl 19
+class10 coco girl 19
+class10 tom boy 12
+class10 red girl 15

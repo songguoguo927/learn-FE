@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Text类型</title>
+    <script>
+    window.onload = function(){
+        var text = document.body.firstChild;
+        // console.log(text)
+        text.appendData('world')
+        text.splitText(5)
+        console.log(document.body.childNodes)
+
+        document.body.normalize()
+        console.log(document.body.childNodes)
+    }
+    </script>
+</head>
+<body>helllllo</body></html>

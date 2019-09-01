@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      body {
+        background: rgba(255, 30, 0, 0.644);
+        color: white;
+        font-size: 32px;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      span {
+        font-family: "字魂51号-青青子吟体";
+        font-size: 2em;
+      }
+      div {
+        display: flex;
+        height: 500px;
+        width: 500px;
+        align-items: center;
+        justify-content: center;
+        /* border: 1px solid blue;
+        border-radius: 50%; */
+      }
+    </style>
+    <script>
+      window.onload = function() {
+        var span = document.getElementsByTagName("span")[0];
+        //   console.log(span)
+        function addZero(params) {
+          return params < 10 ? "0" + params : params;
+        }
+        function formDate() {
+          var date = new Date();
+          var y = date.getFullYear();
+          var m = addZero(date.getMonth() + 1);
+          var d = addZero(date.getDate());
+          var h = addZero(date.getHours());
+          var minu = addZero(date.getMinutes());
+          var s = addZero(date.getSeconds());
+          //2019-07-23 08:23:10
+          return `${y}-${m}-${d} ${h}:${minu}:${s}`;
+        }
+        setInterval(function() {
+          var timeStr = formDate();
+          span.innerText = timeStr;
+        }, 1000);
+      };
+    </script>
+  </head>
+  <body>
+    <div>
+      <span class="time-wrap"></span>
+    </div>
+  </body>
+</html>

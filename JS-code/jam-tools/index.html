@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>测试的页面</title>
+    <script src="./jam-ajax.js"></script>
+    <script src="./cookie.js"></script>
+  </head>
+  <body>
+    <button id="btn">获取数据</button>
+    <div id="box"></div>
+
+    <script>
+      var btn = document.getElementById("btn");
+      var box = document.getElementById("box");
+
+      btn.onclick = function() {
+        ajax({
+          method: "get",
+          url: "./data.json",
+          success: function(data) {
+            alert(data);
+          },
+          failed: function(error) {
+            console(error);
+          }
+        });
+      };
+
+      setCookie("type", "animal", 365);
+      setCookie("name", "wangwang", 14);
+
+      alert(getCookie("age"));
+      alert(getCookie("type"));
+
+      removeCookie("type");
+      alert(getCookie("type"));
+    </script>
+  </body>
+</html>
