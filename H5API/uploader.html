@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 所有type属性(attribute)为file的 <input> 元素都有一个files属性(property),用来存储用户所选择的文件.  -->
+    上传图片：<input type="file" id="upload" /> 预览区：
+    <div class="container-img">
+
+    </div>
+    <canvas id="canvas"></canvas>
+    <script>
+        function loadImage(image, loader, error) {
+            // 创建 image 对象加载图片；
+            let img = new Image();
+
+            // 当为线上图片时，需要设置 crossOrigin 属性；
+            if (image.indexOf('http') == 0) img.crossOrigin = '*';
+            img.onload = () => {
+                loaded(img);
+
+                // 使用完后清空该对象，释放内存；
+                setTimeout(() => {
+                    img = null;
+                }, 1000);
+            };
+            img.onerror = () => {
+                error('img load error');
+            };
+            img.src = image;
+            document.querySelector('.container-img').appendChild(img)
+        }
+    </script>
+</body>
+
+</html>

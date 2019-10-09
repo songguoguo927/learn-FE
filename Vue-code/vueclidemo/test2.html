@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .resize-bar2 {
+            cursor: ns-resize;
+            opacity: 0;
+        }
+        /* 拖拽线 */
+        
+        .resize-line2 {
+            width: inherit;
+            border-top: 2px solid #eee;
+            border-bottom: 2px solid green;
+            pointer-events: none;
+        }
+        
+        .resize-bar2::-webkit-scrollbar {
+            width: 100%;
+            height: inherit;
+        }
+        
+        .resize-bar2:hover~.resize-line,
+        .resize-bar2:active~.resize-line {
+            border-left: 1px dashed red;
+        }
+        /* Firefox只有下面一小块区域可以拉伸 */
+        /* @supports (-moz-user-select: none) {
+            .resize-bar:hover~.resize-line,
+            .resize-bar:active~.resize-line {
+                border-left: 1px solid #bbb;
+            }
+            .resize-bar:hover~.resize-line::after,
+            .resize-bar:active~.resize-line::after {
+                content: '';
+                position: absolute;
+                width: 16px;
+                height: 16px;
+                bottom: 0;
+                right: -8px;
+                background: url(./resize.svg);
+                background-size: 100% 100%;
+            }
+        } */
+    </style>
+</head>
+
+<body>
+    <div style="height:400px;background:#bbb;overflow: hidden;position: relative;">
+        <div class="row-top">
+            <div class="resize-bar2" style="width:inherit ;height:20px;resize:vertical;background: khaki;overflow: scroll"></div>
+            <div class="resize-line2"></div>
+            <div class="resize-save2" style="position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            overflow-y: hidden;">
+                上面的内容
+            </div>
+        </div>
+        <div class="row-bottom" style="overflow: hidden">
+            下部的内容
+        </div>
+    </div>
+</body>
+
+</html>

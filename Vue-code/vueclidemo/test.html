@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        svg {
+            width: 300px;
+            height: 150px;
+        }
+        
+        path {
+            fill: #4682B4;
+        }
+        
+        text {
+            stroke: #fff;
+            stroke-width: 1;
+            font-size: 20px;
+            text-anchor: middle;
+            /* 文本水平居中 */
+            dominant-baseline: middle;
+            /* 文本垂直居中 */
+        }
+    </style>
+</head>
+
+<body>
+    <svg>
+          <path d="M150 0 L75 200 L225 200 Z" />
+          <text x='150' y='75'>1</text>
+        </svg>
+    <svg>
+          // dominant-baseline设置文本垂直对齐方式，text-before-edge设置文本在边缘，恰好完全显示
+          <text dominant-baseline=text-before-edge>你好</text>
+      </svg>
+</body>
+
+</html>

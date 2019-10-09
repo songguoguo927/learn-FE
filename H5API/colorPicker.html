@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        input[type="color"] {
+            width: 20px;
+            border: none;
+            vertical-align: middle;
+            outline: none
+        }
+    </style>
+</head>
+
+<body>
+    choose color:
+    <input id="colorPicker" type="color" value="#ff0000" name="userChooseColor" /> <br/> choosed:
+    <p>lalalal</p>
+    <script>
+        let colorPicker = document.querySelector('#colorPicker')
+            // colorPicker.addEventListener("input", updateFirst, false);
+        colorPicker.addEventListener("change", watchColorPicker, false);
+
+        function watchColorPicker(e) {
+            document.querySelectorAll("p").forEach(function(p) {
+                console.log(e.target.value) //每次选择的颜色值 #000000格式
+                p.style.color = e.target.value;
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -14,9 +14,10 @@ export default {
             price:5
         }
     },
-    metdods:{
+    methods:{
         addOne(){
-            this.$store.dispatch('increase',this.price)
+            // console.log('11111')
+           this.$store.dispatch('increase',this.price)
         },
         minusOne(){
             this.$store.commit('decrement',this.price)

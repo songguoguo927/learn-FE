@@ -6,6 +6,11 @@ let store = new Vuex.Store({
     state:{
         totalPrice:0
     },
+    getters:{
+        getTotal(){
+            return state.totalPrice;
+        }
+    },
     mutations:{//必须是同步
         increment(state,price){
             state.totalPrice += price
