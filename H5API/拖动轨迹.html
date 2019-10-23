@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html id="hId">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<style type="text/css">
+    * {
+        margin: 0px;
+        padding: 0px;
+    }
+    
+    #box {
+        position: absolute;
+        left: 300px;
+        top: 100px;
+        width: 300px;
+        height: 200px;
+        border: 1px solid black;
+    }
+    
+    #title {
+        width: 300px;
+        height: 30px;
+        background-color: green;
+        text-align: center;
+    }
+    
+    #content {
+        width: 300px;
+        height: 170px;
+    }
+</style>
+
+
+<body>
+    <div id="box">
+        <div id="title">
+            标题
+        </div>
+        <div id="content">
+            内容内容内容内容
+        </div>
+    </div>
+    <script type="text/javascript">
+        //定义一个数组，保存鼠标经历的每个点；
+        var points = [];
+
+
+        window.onload = function() {
+            var isDown = false;
+            var offsetX = 0;
+            var offsetY = 0;
+            document.getElementById("title").onmousedown = function(event) {
+                var evt = event || window.event;
+                offsetX = evt.offsetX;
+                offsetY = evt.offsetY;
+                isDown = true;
+                this.style.cursor = "pointer";
+            }
+
+            document.onmouseup = function() {
+                isDown = false;
+                replay();
+            }
+
+            document.onmousemove = function(event) {
+                if (isDown) {
+                    var box = document.getElementById("box");
+                    var evt = event || window.event;
+                    //求出box的left和top
+                    var left = evt.pageX - offsetX;
+                    var top = evt.pageY - offsetY;
+                    //把left和top放到一个对象里
+                    var obj = {
+                        "left": left,
+                        "top": top
+                    };
+                    //把对象放入数组
+                    points.push(obj);
+
+                    box.style.left = left + "px";
+                    box.style.top = top + "px";
+                }
+            }
+        }
+
+
+        function replay() {
+            var i = points.length - 1; //i赋值为数组的最大下标；
+            //启动定时器，把数组倒着进行循环
+            var mytimer = setInterval(function() {
+                    i--; //下标--
+                    if (i < 0) { //下标i越界（越的是下界）
+                        window.clearInterval(mytimer); //停定时器
+                        points = []; //清空数组中的数据
+                        return; //结束函数执行。
+                    }
+                    //根据下标i，从数组中取出数据（left和top）赋给box
+                    var box = document.getElementById("box");
+                    box.style.left = points[i].left + "px";
+                    box.style.top = points[i].top + "px";
+                },
+                20
+            );
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        .top {
+            width: 100vw;
+            height: 475px;
+            background: cadetblue;
+            overflow: hidden scroll;
+            resize: vertical
+        }
+        
+        .top-left {
+            background: rebeccapurple;
+            width: 50%;
+            height: inherit;
+            /* display: inline-block; */
+            float: left;
+            overflow: hidden;
+            /* resize: horizontal; */
+            position: relative;
+        }
+        
+        .top-left>p {
+            /* opacity: 0; */
+            position: absolute;
+            right: 0px;
+            bottom: -10px;
+            cursor: e-resize;
+        }
+        
+        .top-left:hover>p {
+            opacity: 1;
+        }
+        
+        .top-right {
+            background: green;
+            width: 50%;
+            height: inherit;
+            display: inline-block;
+        }
+        
+        .bottom {
+            width: 100vw;
+            height: calc(100vh - 475px);
+            background: cornflowerblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="conatiner">
+        <div class="top">
+            <div class="top-left">
+                <p id="resizebar">」</p>
+            </div>
+            <div class="top-right"></div>
+        </div>
+        <div class="bottom"></div>
+    </div>
+    <script>
+        window.onload = function() {
+            var obj = document.getElementById('resizebar')
+            var left = document.getElementsByClassName('top-left')[0]
+            var initX = 0,
+                initY = 0; //初始位置
+            var dragIf = false;
+            obj.onmousedown = function(e) {
+                console.log(111111, '鼠标按下')
+                console.log(e.pageX, e.pageY)
+
+                initX = e.pageX
+                initY = e.pageY;
+                dragIf = true; //可以进行拖拽的标志 
+            }
+            document.onmouseup = function(e) {
+                dragIf = false
+                console.log(33333, '鼠标弹起')
+                console.log(e.pageX, e.pageY)
+                console.log(e)
+            }
+            document.onmousemove = function(e) {
+
+                if (!dragIf) { //这个判断极为重要，只有按下的移动才有效 
+                    return;
+                }
+                if (e.button == 0) {
+                    console.log(222222, '按住的鼠标移动') //按住左键
+                    console.log(e.pageX, e.pageY)
+                    let moveX = e.pageX - initX;
+                    left.style.width = `calc((${left.style.width} - ${moveX})px)`
+                }
+
+
+            }
+        }
+    </script>
+</body>
+
+</html>
