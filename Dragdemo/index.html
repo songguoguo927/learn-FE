@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://unpkg.com/draggabilly@2/dist/draggabilly.pkgd.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container" style="width: 600px;
+    height: 300px;
+    background: red;">
+        <div id="draggable" style="width: 100px;
+        height: 100px;
+        background: green;margin: 0 auto;"></div>
+    </div>
+    <script>
+        var elem = document.querySelector('#draggable');
+        var draggie = new Draggabilly(elem, {
+            axis: 'y', //将运动限制为水平或垂直轴。默认不设置是均可
+            containment: '#container', //包含移动到元素的边界。如果为true，则容器将是父元素。
+            // grid:[20,20],//每个x和y像素将元素捕捉到网格。
+            // handle:'.handle',//指定拖动交互在哪个元素上开始。当您不希望将所有内部元素都用于拖动时，例如输入和表单时，handle很有用
+        });
+
+        function listener() { //在事件里this指向当前拖拽的元素
+            console.log('eventName happened', this.position.x, this.position.y);
+        }
+        // 绑定事件监听
+        // draggie.on( 'eventName', listener );
+        // // 移除事件监听
+        // draggie.off( 'eventName', listener );
+        // // 只触发一次事件监听。注意是once不是one或者on
+        // draggie.once( 'eventName', function() {
+        //     console.log('eventName happened just once');
+        // });
+        draggie.on('dragStart', function(event, pointer) {
+            //拖动开始移动前触发，当移动小于2像素时表现为点击
+            //event - 类型: 事件 - 原生的mousedown或touchstart事件
+            //pointer - 类型: 鼠标事件（MouseEvent）或触控事件（Touch）对象 - 这个事件对象有.pageX和.pageY
+            console.log('开始拖动', event)
+        })
+        draggie.on('dragMove', function(event, pointer, moveVector) {
+            //当元素移动时触发
+            //event - 类型: 事件 - 原生的mousemove或者touchmove事件
+            //moveVector - 类型: 对象 - 当前位置离初始位置的位移 { x: 20, y: -30 }
+            console.log('拖动过程中', moveVector)
+        })
+        draggie.on('dragEnd', function(event, pointer) {
+            //当元素停止移动时触发
+            //event - 类型: 事件 - the original mouseup or touchend event
+            console.log('结束拖动', event.offsetX, event.offsetY)
+            console.log('结束拖动', event.target.offsetLeft, event.target.offsetTop)
+        })
+        draggie.on('pointerDown', function(event, pointer) {
+            //当用户指针按下（鼠标、触摸）时触发
+            //event - 类型: 事件 - the original mouseup or touchend event
+            console.log('鼠标按下')
+        })
+        draggie.on('pointerMove', function(event, pointer, moveVector) {
+            //当用户的指针移动时触发
+            //event - 类型: 事件 - 原生的mousemove或者touchmove事件
+        })
+        draggie.on('pointerUp', function(event, pointer, moveVector) {
+            //当用户指针离开元素时触发。
+            //event - 类型: 事件 - the original mouseup or touchend event
+        })
+        draggie.on('staticClick', function(event, pointer, moveVector) {
+            //用户的指针压下并没有开始拖动。
+            // 单击事件很难拖动界面检测，因为他们是当用户的鼠标触发。draggabilly的staticclick事件解决了，因为它被触发时，用户没有拖
+            //event - 类型: 事件 - the original mouseup or touchend event
+        })
+
+        // draggie.disable()
+        // draggie.enable()
+        // draggie.destroy()
+    </script>
+</body>
+
+</html>

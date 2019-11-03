@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div id="parentBox" style="width: 400px;height:400px;background: black;position: relative;">
+            <div id="candrag" style="width: 100px;height:100px;background: red;position: absolute; top:10px"></div>
+        </div>
+    </div>
+    <script>
+        let box = document.querySelector('#candrag')
+            // let wrap = document.querySelector('#parentBox')
+        let offset = {}
+        let isDraging = false
+        drag(box, {
+            axis: 'y',
+            containment: '#parentBox'
+        })
+
+        function drag(box, option) {
+            box.onmousedown = function(e) {
+                var e = e || window.event;
+                //浏览器默认当鼠标移动时，滚动条也会跟着动，所以要阻止默认事件
+                e.preventDefault();
+                offset.x = e.clientX - this.offsetLeft;
+                offset.y = e.clientY - this.offsetTop;
+                isDraging = true;
+                let wrap = document.querySelector(option.containment) || document.documentElement
+                box.onmousemove = function(e) {
+                    var e = e || window.event;
+                    //浏览器默认当鼠标移动时，滚动条也会跟着动，所以要阻止默认事件
+                    e.preventDefault();
+                    var maxX = wrap.clientWidth - box.offsetWidth;
+                    var maxY = wrap.clientHeight - box.offsetHeight;
+                    var moveX = Math.min(Math.max(0, (e.clientX - offset.x)), maxX);
+                    var moveY = Math.min(Math.max(0, (e.clientY - offset.y)), maxY);
+                    if (isDraging) {
+                        switch (option.axis) {
+                            case 'x':
+                                box.style.left = moveX + 'px';
+                                box.style.top = box.getBoundingClientRect().top ? box.getBoundingClientRect().top : 0 + 'px';
+                                break;
+                            case 'y':
+                                box.style.left = box.getBoundingClientRect().left ? box.getBoundingClientRect().left : 0 + 'px';
+                                box.style.top = moveY + 'px';
+                                break;
+                            default:
+                                box.style.left = moveX + 'px';
+                                box.style.top = moveY + 'px';
+                                break;
+                        }
+
+                    }
+                    document.onmouseup = function() { // 鼠标抬起时不再移动  
+                        // 预防鼠标弹起来后还会循环（即预防鼠标放上去的时候还会移动）
+                        document.onmousedown = box.onmousemove = null;
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
